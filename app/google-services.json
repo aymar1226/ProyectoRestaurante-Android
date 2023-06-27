@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "435710462079",
+    "project_id": "pdf-generatorqr",
+    "storage_bucket": "pdf-generatorqr.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:435710462079:android:4387cce5e3de4ec6bd174a",
+        "android_client_info": {
+          "package_name": "com.example.proyectorestaurante"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "435710462079-03fsh8b37ejctnpqd7tfe586mofv50ik.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.proyectorestaurante",
+            "certificate_hash": "48d54cd0fb61416360788d90a88fc5aa4acfc1a1"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATCznVHfemzep7oGqUcxm2CCVv7Tw29nc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">ProyectoRestaurante</string>
+    <string name="title">Restaurante Hinojo Oriental</string>
+    <string name="user">Usuario</string>
+    <string name="contraseña">Contraseña</string>
+    <string name="ingresar">Ingresar</string>
+
+    <string name="agregar">Agregar</string>
+    <string name="txtkung">Pollo Kung Pao</string>
+    <string name="txtalemendaras">Pollo con Almendras</string>
+    <string name="txtnaranja">Pollo a la Naranja</string>
+    <string name="txtarroztres">Arroz tres delicias</string>
+    <string name="txtchow">Chow Mein</string>
+    <string name="fuqui">Fuqui Feipian</string>
+    <string name="txtTitulo">Gestión de Platos</string>
+    <string name="btn">Ver</string>
+    <string name="lblInicioPersonal">Inicio Personal</string>
+    <string name="tituloperfil">Perfil del Administrador</string>
+    <string name="nombre">Nombres: Jorge Armando</string>
+    <string name="apellidos">Apellidos: Bonifaz Campos</string>
+    <string name="puesto">Puesto: Administrador</string>
+    <string name="dni">DNI: 72466894</string>
+    <string name="correo">Correo: bonifazjorge@gmail.com</string>
+    <string name="editarusuario">Editar Usuario</string>
+    <string name="grrupo">GROUP SIX</string>
+    <string name="by">BY</string>
+    <string name="client_id">435710462079-03fsh8b37ejctnpqd7tfe586mofv50ik.apps.googleusercontent.com</string>
+
+    <string name="add_personal">Agregar Personal</string>
+    <string name="id_personal">ID:</string>
+    <string name="nombre_personal">Nombre:</string>
+    <string name="apellido_personal">Apellido:</string>
+    <string name="cargo_personal">Cargo:</string>
+    <string name="dni_personal">DNI:</string>
+    <string name="boton_agregar_personal">Agregar Personal</string>
+
+    <string name="add_platos">Agregar Platos</string>
+    <string name="id_platos">ID:</string>
+    <string name="nombre_platos">Nombre:</string>
+    <string name="categoria_platos">Categoría:</string>
+    <string name="descripcion_platos">Decripción:</string>
+    <string name="precio_platos">Precio:</string>
+    <string name="boton_agregar_platos">Agregar Platos</string>
+
+</resources>
