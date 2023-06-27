@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    signingConfigs {
+    /*signingConfigs {
         debug {
             storeFile file('C:\\Users\\JACK\\.android\\debug.keystore')
             storePassword 'android'
@@ -17,7 +17,7 @@ android {
             keyAlias 'mykey'
             keyPassword '123456'
         }
-    }
+    }*/
     namespace 'com.example.proyectorestaurante'
     compileSdk 33
 
