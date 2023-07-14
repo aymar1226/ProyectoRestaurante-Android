@@ -12,10 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,22 +29,31 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.proyectorestaurante.ConexionDB;
 import com.example.proyectorestaurante.R;
+import com.example.proyectorestaurante.recycler.Adapter;
+import com.example.proyectorestaurante.recycler.Players;
+import com.google.api.services.drive.model.User;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Crud_Personal extends AppCompatActivity {
-    LinearLayout contenedorTarjetas;
+    ListView listView;
     TextView nombre,apellido,text_personal,cargo;
     EditText txt_buscar;
-    ImageView boton_buscar;
+    ImageView boton_buscar,boton_agregar;
+
 
     final int[] idUsuarioSeleccionado = new int[1];
     CardView tarjetaSeleccionada;
-    boolean buscarOn=false;
+    boolean buscarOn=false,isLongClickActive=false;
+    List<Players> userList = new ArrayList<>();
+    Adapter adapter;
+
 
     public void IraAgregar_personal(View view) {
         Intent intent = new Intent(Crud_Personal.this, AgregarPersonal.class);
@@ -69,6 +80,83 @@ public class Crud_Personal extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_crud_personal);
+        //Elementos
+        txt_buscar=findViewById(R.id.buscar_personal);
+        boton_buscar=findViewById(R.id.boton_buscar);
+        listView = findViewById(R.id.listView);
+        boton_agregar=findViewById(R.id.agregar_usuario);
+
+        //Metodos
+
+        //Buscar card
+
+
+        Connection connection =ConexionDB.obtenerConexion();
+        obtenerYMostrarTarjetas(connection);
+        Buscar(connection);}
+    private void obtenerYMostrarTarjetas(Connection connection) {
+        String texto = txt_buscar.getText().toString();
+        String query;
+        // Consulta SQL para seleccionar todos los registros de la tabla de usuarios
+        if(buscarOn){
+            query = "SELECT id_personal, nombre, apellido, cargo FROM personal WHERE nombre LIKE '%" + texto + "%' OR apellido LIKE '%" + texto + "%'";
+        }
+        else {
+            query = "SELECT id_personal, nombre, apellido, cargo FROM personal";
+        }
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                int idUsuario = resultSet.getInt("id_personal");
+                String nombreUsuario = resultSet.getString("nombre");
+                String apellidoUsuario = resultSet.getString("apellido");
+                String cargo = resultSet.getString("cargo");
+
+                Players player = new Players(idUsuario, nombreUsuario, apellidoUsuario, cargo);
+                userList.add(player);
+
+
+            }
+            statement.close();
+            resultSet.close();
+
+            adapter=new Adapter(this, R.layout.content_personal, userList,boton_agregar);
+            listView.setAdapter(adapter);
+
+        }catch(Exception e){
+                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
+
+    public void Buscar(Connection connection) {
+        boton_buscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String texto = txt_buscar.getText().toString();
+                if(!texto.isEmpty()){
+                    userList.clear();
+                    buscarOn=true;
+                }
+                else {
+                    buscarOn=false;
+                }
+                adapter.notifyDataSetChanged();
+                obtenerYMostrarTarjetas(connection);
+            }
+        });
+    }
+
+}
+
+
+
+    /*
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -387,10 +475,10 @@ public class Crud_Personal extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
+
+    }*/
     
 
-
-}
 
 
 
