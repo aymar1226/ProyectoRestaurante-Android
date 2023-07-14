@@ -18,6 +18,9 @@
         android:theme="@style/Theme.ProyectoRestaurante"
         tools:targetApi="31">
         <activity
+            android:name=".Personal_recycler"
+            android:exported="false" />
+        <activity
             android:name=".Activity.QRActivity"
             android:exported="false" />
         <activity
