@@ -102,96 +102,18 @@
             </ImageView>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-    <ScrollView
+    <ListView
+        android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:overScrollMode="never"
-        android:scrollbars="none"
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_header">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:id="@+id/contenedor_tarjetas"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-                <!-- Card 1 -->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="4dp"
-                    android:background="@drawable/selector_background"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="16dp">
-
-                        <ImageView
-                            android:id="@+id/imagen_plato"
-                            android:layout_width="96dp"
-                            android:layout_height="96dp"
-                            android:contentDescription="Profile Image"
-                            android:src="@drawable/imgusu" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/txt_nombre"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Nombre del plato"
-                                android:textColor="#212121"
-                                android:textSize="18sp" />
-
-                            <TextView
-                                android:id="@+id/txt_categoria"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Categoria"
-                                android:textColor="#757575"
-                                android:textSize="14sp" />
-
-                            <TextView
-                                android:id="@+id/txt_descripcion"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Descripcion"
-                                android:textColor="#757575"
-                                android:textSize="14sp" />
-
-                            <TextView
-                                android:id="@+id/txt_precio"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Precio"
-                                android:textColor="#757575"
-                                android:textSize="14sp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+        app:layout_constraintTop_toBottomOf="@id/layout_header"
+        app:layout_constraintVertical_bias="0.0"
+        android:divider="#00000000"
+        android:dividerHeight="8dp"
+        />
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"

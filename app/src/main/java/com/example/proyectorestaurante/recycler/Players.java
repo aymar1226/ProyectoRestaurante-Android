@@ -5,12 +5,14 @@ public class Players {
     private String nombre;
     private String apellido;
     private String cargo;
+    private String dni;
 
-    public Players(int id, String nombre, String apellido, String cargo) {
+    public Players(int id, String nombre, String apellido, String cargo, String dni) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.cargo = cargo;
+        this.dni = dni;
     }
 
     public int getId() {
@@ -27,5 +29,9 @@ public class Players {
 
     public String getCargo() {
         return cargo;
+    }
+
+    public String getDni() {
+        return dni;
     }
 }

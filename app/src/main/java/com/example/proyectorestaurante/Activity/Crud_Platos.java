@@ -13,31 +13,140 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.proyectorestaurante.ConexionDB;
 import com.example.proyectorestaurante.R;
+import com.example.proyectorestaurante.recycler.PersonalAdapter;
+import com.example.proyectorestaurante.recycler.Platos;
+import com.example.proyectorestaurante.recycler.PlatosAdapter;
+import com.example.proyectorestaurante.recycler.Players;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Crud_Platos extends AppCompatActivity {
 
-    LinearLayout contenedorTarjetas;
+    PlatosAdapter platosAdapter;
+
     TextView nombre,categoria,precio,descripcion,text_platos;
-    ImageView boton_buscar,imagen_plato,eliminar_plato,agregar_plato;
-    CardView tarjetaSeleccionada;
+    ImageView boton_buscar,imagen_plato,boton_agregar,boton_eliminar;
 
     EditText txt_buscar;
 
     final int[] idPlatoSeleccionado = new int[1];
     boolean buscarOn=false;
 
+    List<Platos> platosList = new ArrayList<>();
+    ListView listView;
 
+
+
+    public void IraAgregar_platos(View view) {
+        Intent intent = new Intent(Crud_Platos.this, AgregarPlatos.class);
+        startActivity(intent);
+    }
+    public void irAInicio(View view) {
+        Intent intent = new Intent(Crud_Platos.this, PrincipalActivity.class);
+        startActivity(intent);
+    }
+    public void irOtroActivity(View view) {
+        Intent intent = new Intent(Crud_Platos.this, PerfilActivity.class);
+        startActivity(intent);
+    }
+    public void irAPlatos(View view) {
+        Intent intent = new Intent(Crud_Platos.this, Crud_Platos.class);
+        startActivity(intent);
+    }
+    public void irAPersonal(View view) {
+        Intent intent = new Intent(Crud_Platos.this, Crud_Personal.class);
+        startActivity(intent);
+    }
+    public void irAQR(View view) {
+        Intent intent = new Intent(Crud_Platos.this, QRActivity.class);
+        startActivity(intent);
+    }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_crud_platos);
+        txt_buscar= findViewById(R.id.txt_buscar);
+        listView=findViewById(R.id.listView);
+
+        boton_buscar=findViewById(R.id.boton_buscar);
+        boton_agregar=findViewById(R.id.agregar_plato);
+        boton_eliminar=findViewById(R.id.eliminar_plato);
+
+
+        Connection connection = ConexionDB.obtenerConexion();
+        obtenerYMostrarTarjetas(connection);
+        Buscar(connection);
+    }
+
+    private void obtenerYMostrarTarjetas(Connection connection) {
+        String texto = txt_buscar.getText().toString();
+        String query;
+        // Consulta SQL para seleccionar todos los registros de la tabla de usuarios
+        if(buscarOn){
+            query = "SELECT id_plato, plato.nombre, precio, categoria.nombre AS nombre_categoria,imagen  FROM plato INNER JOIN categoria on plato.id_categoria = categoria.id_categoria WHERE plato.nombre LIKE '%" + texto + "%'";
+        }
+        else {
+            query = "SELECT id_plato, plato.nombre, precio, categoria.nombre AS nombre_categoria,imagen  FROM plato INNER JOIN categoria on plato.id_categoria = categoria.id_categoria";
+        }
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                int idPlato = resultSet.getInt("id_plato");
+                String nombrePlato = resultSet.getString("nombre");
+                double precio = resultSet.getDouble("precio");
+                String categoria = resultSet.getString("nombre_categoria");
+                String imagen = resultSet.getString("imagen");
+
+                Platos platos = new Platos(idPlato, nombrePlato, precio, imagen, categoria);
+                platosList.add(platos);
+
+
+            }
+            statement.close();
+            resultSet.close();
+
+            platosAdapter =new PlatosAdapter(this, R.layout.content_platos, platosList,boton_agregar,boton_eliminar);
+            listView.setAdapter(platosAdapter);
+
+
+        }catch(Exception e){
+            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+    }
+    public void Buscar(Connection connection) {
+        boton_buscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String texto = txt_buscar.getText().toString();
+                if (!texto.isEmpty()) {
+                    buscarOn = true;
+                } else {
+                    buscarOn = false;
+                }
+                platosList.clear();
+                obtenerYMostrarTarjetas(connection);
+            }
+        });
+    }
+
+
+
+    /*
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,30 +210,7 @@ public class Crud_Platos extends AppCompatActivity {
             }
         });
     }
-    public void IraAgregar_platos(View view) {
-        Intent intent = new Intent(Crud_Platos.this, AgregarPlatos.class);
-        startActivity(intent);
-    }
-    public void irAInicio(View view) {
-        Intent intent = new Intent(Crud_Platos.this, PrincipalActivity.class);
-        startActivity(intent);
-    }
-    public void irOtroActivity(View view) {
-        Intent intent = new Intent(Crud_Platos.this, PerfilActivity.class);
-        startActivity(intent);
-    }
-    public void irAPlatos(View view) {
-        Intent intent = new Intent(Crud_Platos.this, Crud_Platos.class);
-        startActivity(intent);
-    }
-    public void irAPersonal(View view) {
-        Intent intent = new Intent(Crud_Platos.this, Crud_Personal.class);
-        startActivity(intent);
-    }
-    public void irAQR(View view) {
-        Intent intent = new Intent(Crud_Platos.this, QRActivity.class);
-        startActivity(intent);
-    }
+
 
     private void obtenerYMostrarTarjetas(Connection connection) {
         CardView ultimoCard = null;
@@ -132,10 +218,10 @@ public class Crud_Platos extends AppCompatActivity {
         // Consulta SQL para seleccionar todos los registros de la tabla de usuarios
         String query;
         if(buscarOn){
-            query = "SELECT id_plato, nombre_plato,descripcion,precio,imagen_plato FROM platos WHERE nombre_plato LIKE '%" + texto + "%'";
+            query = "SELECT id_plato, nombre ,descripcion,precio,imagen FROM plato WHERE nombre_plato LIKE '%" + texto + "%'";
         }
         else {
-            query = "SELECT id_plato, nombre_plato, descripcion, precio, imagen_plato FROM platos";        }
+            query = "SELECT id_plato, nombre_plato, descripcion, precio, imagen_plato FROM plato";        }
 
         try {
             Statement statement = connection.createStatement();
@@ -357,5 +443,5 @@ public class Crud_Platos extends AppCompatActivity {
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-    }
+    }*/
 }

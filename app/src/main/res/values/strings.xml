@@ -42,4 +42,7 @@
     <string name="precio_platos">Precio:</string>
     <string name="boton_agregar_platos">Agregar Platos</string>
 
+
+    <string name="Cargo">cargo_personal</string>
+
 </resources>

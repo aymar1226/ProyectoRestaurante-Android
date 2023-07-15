@@ -27,6 +27,16 @@
             app:layout_constraintTop_toTopOf="parent">
         </TextView>
         <ImageView
+            android:id="@+id/editar_personal"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="50dp"
+            android:src="@drawable/editar"
+            app:layout_constraintBottom_toBottomOf="@id/text_personal"
+            app:layout_constraintEnd_toEndOf="@+id/image_menu"
+            app:layout_constraintTop_toTopOf="@id/text_personal"
+            app:tint="#000"></ImageView>
+        <ImageView
             android:id="@+id/image_menu"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -64,6 +74,7 @@
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
     <LinearLayout
+        android:id="@+id/formulario"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -72,113 +83,150 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="30dp">
+        android:layout_marginHorizontal="30dp"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp">
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <TextView
                 android:id="@+id/textViewName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nombre" />
+                android:text="Nombre"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/black"/>
 
             <EditText
-                android:id="@+id/editTextName"
+                android:id="@+id/editTextNombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp" />
+                android:layout_marginStart="8dp"
+                android:enabled="false"
+                android:textColor="@color/colorSelected" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp">
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <TextView
                 android:id="@+id/textViewDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Apellido" />
+                android:text="Apellido"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/black"/>
 
             <EditText
-                android:id="@+id/editTextDescription"
+                android:id="@+id/editTextApellido"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp" />
+                android:layout_marginStart="8dp"
+                android:enabled="false"
+                android:textColor="@color/colorSelected"/>
         </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp">
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DNI" />
+                android:text="DNI"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/black"/>
 
             <EditText
+                android:id="@+id/editTextDNI"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp" />
+                android:layout_marginStart="8dp"
+                android:enabled="false"
+                android:textColor="@color/colorSelected"
+                android:inputType="number"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp">
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Direccion" />
+                android:text="Direccion"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/black"/>
 
             <EditText
+                android:id="@+id/editTextDireccion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp" />
+                android:layout_marginStart="8dp"
+                android:enabled="false"
+                android:textColor="@color/colorSelected"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp">
-
+            android:orientation="vertical"
+            android:padding="10dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Telefono" />
-
-            <EditText
+                android:text="Cargo"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/black"/>
+            <Spinner
+                android:id="@+id/spinnerCargo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp" />
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp">
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Telefono" />
+                android:text="Telefono"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/black"/>
 
             <EditText
+                android:id="@+id/editTextTelefono"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp" />
+                android:layout_marginStart="8dp"
+                android:enabled="false"
+                android:textColor="@color/colorSelected"/>
         </LinearLayout>
+
 
 
     </LinearLayout>
-
+    <Button
+        android:id="@+id/actualizarButton"
+        android:layout_width="130dp"
+        android:layout_height="70dp"
+        android:text="Actualizar"
+        app:layout_constraintTop_toBottomOf="@id/formulario"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

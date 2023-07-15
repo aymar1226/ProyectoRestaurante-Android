@@ -20,7 +20,7 @@
             android:id="@+id/imagen_personal"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/imgusu"
+            android:src="@drawable/fotovacio"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
         <LinearLayout
