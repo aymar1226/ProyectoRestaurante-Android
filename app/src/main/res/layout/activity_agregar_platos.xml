@@ -103,6 +103,19 @@
             android:spinnerMode="dropdown"
             >
         </Spinner>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+            <Button
+                android:id="@+id/btn_select_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Seleccionar Imagen"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
 
         <Button
             android:id="@+id/btnAdd"

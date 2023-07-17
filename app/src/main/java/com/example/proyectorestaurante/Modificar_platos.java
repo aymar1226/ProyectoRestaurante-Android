@@ -1,10 +1,18 @@
 package com.example.proyectorestaurante;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -12,11 +20,22 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.Manifest;
 
+
+import com.example.proyectorestaurante.Activity.AgregarPlatos;
 import com.example.proyectorestaurante.Activity.Crud_Personal;
 import com.example.proyectorestaurante.Activity.Crud_Platos;
 import com.example.proyectorestaurante.Activity.ModificarPersonal;
+import com.example.proyectorestaurante.recycler.Platos;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -25,10 +44,14 @@ import java.util.List;
 
 public class Modificar_platos extends AppCompatActivity {
 
+    ImageUploader imageUploader;
+    private StorageReference storageReference;
     EditText txtnombre,txtdescripcion,txtprecio;
-    ImageView editarImage;
-    Button actualizarButton;
+    ImageView editarImage,imagenActual;
+    Button actualizarButton,selectImagenButton;
     Spinner spinnerCategoria;
+    public String imagen_ruta="predet.jpg";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +66,24 @@ public class Modificar_platos extends AppCompatActivity {
         spinnerCategoria.setEnabled(false);
 
 
-        actualizarButton=findViewById(R.id.actualizarButton);
+        actualizarButton = findViewById(R.id.actualizarButton);
+        selectImagenButton = findViewById(R.id.btn_select_image);
+
+        imagenActual = findViewById(R.id.imagenActual);
         editarImage = findViewById(R.id.editar_plato);
+
+        // Obtén la referencia a Firebase Storage
+        storageReference = FirebaseStorage.getInstance().getReference();
+
+        //Instancia de la clase para subir imagenes
+        imageUploader = new ImageUploader(Modificar_platos.this, storageReference);
+
+        selectImagenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imageUploader.seleccionarImagen();
+            }
+        });
 
         clicEditar();
         Connection connection=ConexionDB.obtenerConexion();
@@ -64,7 +103,6 @@ public class Modificar_platos extends AppCompatActivity {
             spinnerCategoria.setAdapter(adapter);
 
             clicActualizar(connection,id_plato);
-
         }else{
             Toast.makeText(getApplicationContext(), "id nulo", Toast.LENGTH_SHORT).show();
         }
@@ -86,13 +124,15 @@ public class Modificar_platos extends AppCompatActivity {
                 txtprecio.setTextColor(Color.BLACK);
 
                 spinnerCategoria.setEnabled(true);
+
+                selectImagenButton.setEnabled(true);
             }
         });
     }
 
     public void obtenerPlato(Connection connection,int id_plato){
 
-        String query= "SELECT plato.nombre, descripcion, precio, categoria.nombre AS nombre_categoria FROM plato INNER JOIN categoria on plato.id_categoria = categoria.id_categoria WHERE id_plato = "+id_plato;
+        String query= "SELECT plato.nombre, descripcion, precio, imagen, categoria.nombre AS nombre_categoria  FROM plato INNER JOIN categoria on plato.id_categoria = categoria.id_categoria WHERE id_plato = "+id_plato;
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -102,11 +142,23 @@ public class Modificar_platos extends AppCompatActivity {
                 String descripcion = resultSet.getString("descripcion");
                 String precio_plato = resultSet.getString("precio");
                 String categoria = resultSet.getString("nombre_categoria");
+                imagen_ruta = resultSet.getString("imagen");
 
                 txtnombre.setText(nombre);
                 txtdescripcion.setText(descripcion);
                 txtprecio.setText(precio_plato);
                 spinnerCategoria.setSelection(id_plato);
+
+                //Setear la Imagen
+                StorageReference imagenReference = storageReference.child("imagenes/"+imagen_ruta);
+                imagenReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Picasso.get()
+                                .load(uri.toString())
+                                .into(imagenActual);
+                    }
+                });
             }
             statement.close();
             resultSet.close();
@@ -146,7 +198,6 @@ public class Modificar_platos extends AppCompatActivity {
                 String descripcion = txtdescripcion.getText().toString();
                 double precio= Double.parseDouble(txtprecio.getText().toString());
                 String categoria = (String) spinnerCategoria.getSelectedItem();
-
                 try {
                     //Obtener id_categoria
                     String categoriaquery="SELECT id_categoria FROM categoria where nombre LIKE '%"+categoria+"%'";
@@ -158,12 +209,18 @@ public class Modificar_platos extends AppCompatActivity {
                     }
 
                     //Actualizar plato
-                    String query = "UPDATE plato SET nombre = '" + nombre + "', descripcion = '" + descripcion + "', precio = '" + precio + "',id_categoria = '"+idcategoria+"' where id_plato= " + id_plato;
+                    String image_name=imageUploader.getImageName();
+                    String query = "UPDATE plato SET nombre = '" + nombre + "', descripcion = '" + descripcion + "', precio = '" + precio + "',id_categoria = '"+idcategoria+"',imagen = '"+image_name+"' where id_plato= " + id_plato;
+
+
 
                     int rowsAffected = st.executeUpdate(query);
                     if (rowsAffected > 0) {
                         Toast.makeText(getApplicationContext(), "Plato actualizado exitosamente", Toast.LENGTH_SHORT).show();
                         //Te redirige al crud plato
+                        //Subir y eliminar imagen
+                        imageUploader.subirImagen();
+                        imageUploader.eliminarImagen(imagen_ruta);
                         Intent intent = new Intent(Modificar_platos.this, Crud_Platos.class);
                         startActivity(intent);
                     } else {
@@ -173,7 +230,17 @@ public class Modificar_platos extends AppCompatActivity {
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Pasa los resultados de la actividad a la instancia de ImageUploader
+        imageUploader.onActivityResult(requestCode, resultCode, data);
+    }
+
 }

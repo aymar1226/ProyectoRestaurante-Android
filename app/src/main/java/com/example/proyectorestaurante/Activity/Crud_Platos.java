@@ -85,6 +85,7 @@ public class Crud_Platos extends AppCompatActivity {
         boton_eliminar=findViewById(R.id.eliminar_plato);
 
 
+
         Connection connection = ConexionDB.obtenerConexion();
         obtenerYMostrarTarjetas(connection);
         Buscar(connection);
@@ -119,7 +120,7 @@ public class Crud_Platos extends AppCompatActivity {
             statement.close();
             resultSet.close();
 
-            platosAdapter =new PlatosAdapter(this, R.layout.content_platos, platosList,boton_agregar,boton_eliminar);
+            platosAdapter =new PlatosAdapter(this, R.layout.content_platos, platosList,boton_agregar,boton_eliminar,Crud_Platos.this);
             listView.setAdapter(platosAdapter);
 
 

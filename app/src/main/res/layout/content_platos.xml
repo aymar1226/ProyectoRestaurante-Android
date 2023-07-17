@@ -20,7 +20,6 @@
             android:id="@+id/imagen_plato"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/predet"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
         <LinearLayout

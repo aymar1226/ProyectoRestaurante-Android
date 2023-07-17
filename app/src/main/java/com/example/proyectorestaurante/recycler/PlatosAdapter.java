@@ -1,7 +1,9 @@
 package com.example.proyectorestaurante.recycler;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +16,19 @@ import androidx.core.content.ContextCompat;
 
 import com.example.proyectorestaurante.Activity.ModificarPersonal;
 import com.example.proyectorestaurante.ConexionDB;
+import com.example.proyectorestaurante.ImageUploader;
 import com.example.proyectorestaurante.Modificar_platos;
 import com.example.proyectorestaurante.R;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,19 +37,23 @@ public class PlatosAdapter extends ArrayAdapter<Platos> {
     private Context mContext;
     private int mResource;
     private List<Platos> mPlatoList;
+    private Activity mActivity;
+    ImageUploader imageUploader;
     private ImageView eliminarImage, agregarImage;
 
     int itemselected;
     boolean isSelected;
     private ArrayList<Integer> selectedItemList = new ArrayList<>();
 
-    public PlatosAdapter(Context context, int resource, List<Platos> personList, ImageView agregar, ImageView eliminar) {
+
+    public PlatosAdapter(Context context, int resource, List<Platos> personList, ImageView agregar, ImageView eliminar, Activity activity) {
         super(context, resource, personList);
         mContext = context;
         mResource = resource;
         mPlatoList = personList;
         agregarImage=agregar;
         eliminarImage=eliminar;
+        mActivity=activity;
     }
 
     @Override
@@ -51,12 +64,26 @@ public class PlatosAdapter extends ArrayAdapter<Platos> {
             view = inflater.inflate(mResource, parent, false);
         }
 
+
         // Configura el contenido de la vista para mostrar los datos de los platos
         TextView nameTextView = view.findViewById(R.id.nombre_plato);
         TextView precioTextView = view.findViewById(R.id.cargo_plato);
         TextView categoriaTextView = view.findViewById(R.id.categoria_plato);
+        ImageView platoImage = view.findViewById(R.id.imagen_plato);
 
         Platos plato = mPlatoList.get(position);
+
+        //Imagen
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("imagenes/"+plato.getImagen_ruta());
+        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get()
+                        .load(uri.toString())
+                        .into(platoImage);
+            }
+        });
+
         nameTextView.setText(plato.getNombre());
         precioTextView.setText("S/"+ String.valueOf(plato.getPrecio()));
         categoriaTextView.setText(plato.getCategoria());
@@ -129,29 +156,45 @@ public class PlatosAdapter extends ArrayAdapter<Platos> {
 
                 mPlatoList.remove(position);
                 notifyDataSetChanged();
-                eliminarPersonalDB(itemselected);
+                eliminarPlatoDB(itemselected);
                 agregarImage.setVisibility(View.VISIBLE);
                 eliminarImage.setVisibility(View.GONE);
+
             }
         });
 
         return view;
     }
 
-    public void eliminarPersonalDB(int itemselected) {
+    public void eliminarPlatoDB(int itemselected) {
+
+        // Obtén la referencia a Firebase Storage
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+
+        //Instancia de la clase para subir imagenes
+        imageUploader = new ImageUploader(mActivity, storageReference);
 
         // Consulta para eliminar el dato
         String query = "DELETE FROM plato WHERE id_plato= " + itemselected;
 
+        //Consulta para obtener el nombre de la imagen a eliminar
+        String imagequery = "SELECT imagen FROM plato WHERE id_plato= "+itemselected;
+
         Connection connection = ConexionDB.obtenerConexion();
 
         try {
-            PreparedStatement stmt = connection.prepareStatement(query);
+            Statement st = connection.createStatement();
+            ResultSet resultSet = st.executeQuery(imagequery);
+            String nombre_imagen=null;
+            if (resultSet.next()) {
+                nombre_imagen = resultSet.getString("imagen");
+            }
 
             // Ejecutar la consulta
-            int filasAfectadas = stmt.executeUpdate();
+            int filasAfectadas = st.executeUpdate(query);
 
             if (filasAfectadas > 0) {
+                imageUploader.eliminarImagen(nombre_imagen);
                 Toast.makeText(mContext, "Plato eliminado correctamente", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(mContext, "El plato no sepudo eliminar", Toast.LENGTH_SHORT).show();

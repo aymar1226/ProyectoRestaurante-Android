@@ -5,14 +5,15 @@ public class Platos {
     private int id;
     private String nombre;
     private double precio;
-    private String imagen;
+    private String imagen_ruta;
     private String categoria;
+    private String imagePath;
 
-    public Platos(int id, String nombre, double precio, String imagen, String categoria) {
+    public Platos(int id, String nombre, double precio, String imagen_ruta, String categoria) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
-        this.imagen = imagen;
+        this.imagen_ruta = imagen_ruta;
         this.categoria = categoria;
     }
 
@@ -28,8 +29,8 @@ public class Platos {
         return precio;
     }
 
-    public String getImagen() {
-        return imagen;
+    public String getImagen_ruta() {
+        return imagen_ruta;
     }
 
     public String getCategoria() {
