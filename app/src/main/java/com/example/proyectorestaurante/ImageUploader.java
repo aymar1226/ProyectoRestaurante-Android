@@ -45,11 +45,12 @@ public class ImageUploader {
         activity.startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
-    public void subirImagen() {
+    public void subirImagen(final Runnable whenDone) {
         StorageReference fileReference = storageReference.child("imagenes/" + imageName);
         fileReference.putFile(imageUri)
                 .addOnSuccessListener(taskSnapshot -> {
                     // La imagen se ha subido exitosamente a Firebase Storage
+                    whenDone.run();
                 })
                 .addOnFailureListener(e -> {
                     // Ocurrió un error al subir la imagen a Firebase Storage

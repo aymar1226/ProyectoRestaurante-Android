@@ -217,12 +217,8 @@ public class Modificar_platos extends AppCompatActivity {
                     int rowsAffected = st.executeUpdate(query);
                     if (rowsAffected > 0) {
                         Toast.makeText(getApplicationContext(), "Plato actualizado exitosamente", Toast.LENGTH_SHORT).show();
-                        //Te redirige al crud plato
-                        //Subir y eliminar imagen
-                        imageUploader.subirImagen();
-                        imageUploader.eliminarImagen(imagen_ruta);
-                        Intent intent = new Intent(Modificar_platos.this, Crud_Platos.class);
-                        startActivity(intent);
+                        gestionarImagen();
+
                     } else {
                         Toast.makeText(getApplicationContext(), "No se pudo actualizar el plato", Toast.LENGTH_SHORT).show();
                     }
@@ -241,6 +237,20 @@ public class Modificar_platos extends AppCompatActivity {
 
         // Pasa los resultados de la actividad a la instancia de ImageUploader
         imageUploader.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void gestionarImagen(){
+        //Subir imagen
+        imageUploader.subirImagen(new Runnable() {
+            @Override
+            public void run() {
+                //Te redirige al crud plato cuando acabe de subir la imagen
+                Intent intent = new Intent(Modificar_platos.this, Crud_Platos.class);
+                startActivity(intent);
+            }
+        });
+        //Eliminar imagen
+        imageUploader.eliminarImagen(imagen_ruta);
     }
 
 }

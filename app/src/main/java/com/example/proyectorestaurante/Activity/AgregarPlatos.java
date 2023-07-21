@@ -18,6 +18,7 @@ import com.example.proyectorestaurante.ImageUploader;
 import com.example.proyectorestaurante.R;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -100,6 +101,8 @@ public class AgregarPlatos extends AppCompatActivity {
                         int rowsAffected = st.executeUpdate(sqlinsert);
                         if (rowsAffected > 0) {
                             Toast.makeText(getApplicationContext(), "Plato agregado exitosamente", Toast.LENGTH_SHORT).show();
+                            gestionarImagen();
+
                         } else {
                             Toast.makeText(getApplicationContext(), "No se pudo agregar el plato", Toast.LENGTH_SHORT).show();
                         }
@@ -107,14 +110,12 @@ public class AgregarPlatos extends AppCompatActivity {
                 } catch (Exception e){
                     Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-                imageUploader.subirImagen();
-                Intent intent = new Intent(AgregarPlatos.this, Crud_Platos.class);
-                startActivity(intent);
             }
         });
     }
 
     public List<String> obtenerCategorias(Connection connection) {
+
 
         List<String> listaCategorias = new ArrayList<>();
 
@@ -143,6 +144,18 @@ public class AgregarPlatos extends AppCompatActivity {
 
         // Pasa los resultados de la actividad a la instancia de ImageUploader
         imageUploader.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void gestionarImagen(){
+        //Subir imagen
+        imageUploader.subirImagen(new Runnable() {
+            @Override
+            public void run() {
+                //Te redirige al crud plato cuando acabe de subir la imagen
+                Intent intent = new Intent(AgregarPlatos.this, Crud_Platos.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
