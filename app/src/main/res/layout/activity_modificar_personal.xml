@@ -219,14 +219,40 @@
 
 
     </LinearLayout>
+
     <Button
         android:id="@+id/actualizarButton"
-        android:layout_width="130dp"
+        android:layout_width="140dp"
         android:layout_height="70dp"
-        android:text="Actualizar"
-        app:layout_constraintTop_toBottomOf="@id/formulario"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp"
-        android:visibility="gone"/>
+        android:text="Actualizar"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/formulario" />
+
+    <Button
+        android:id="@+id/agregarUsuario"
+        android:layout_width="140dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="20dp"
+        android:text="Agregar Usuario"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.79"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/formulario" />
+
+    <Button
+        android:id="@+id/eliminarUsuario"
+        android:layout_width="140dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="20dp"
+        android:text="Eliminar Usuario"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/formulario" />
 </androidx.constraintlayout.widget.ConstraintLayout>

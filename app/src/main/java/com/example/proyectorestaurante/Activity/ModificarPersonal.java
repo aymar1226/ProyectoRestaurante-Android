@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.example.proyectorestaurante.ConexionDB;
 import com.example.proyectorestaurante.R;
-import com.example.proyectorestaurante.recycler.Players;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -25,56 +24,85 @@ import java.util.List;
 
 public class ModificarPersonal extends AppCompatActivity {
 
-    EditText txtnombre,txtapellido,txtdni,txtdireccion,txttelefono;
+    EditText txtnombre, txtapellido, txtdni, txtdireccion, txttelefono;
     ImageView editarImage;
-    Button actualizarButton;
+    Button actualizarButton, agregarUsuario, eliminarUsuarioBtn;
     Spinner spinnerCargo;
+    int id_personal;
+    boolean usuarioCreado = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modificar_personal);
 
-        //Elementos
-        txtnombre=findViewById(R.id.editTextNombre);
-        txtapellido=findViewById(R.id.editTextApellido);
-        txtdni=findViewById(R.id.editTextDNI);
-        txtdireccion=findViewById(R.id.editTextDireccion);
-        txttelefono=findViewById(R.id.editTextTelefono);
+        // Elementos
+        txtnombre = findViewById(R.id.editTextNombre);
+        txtapellido = findViewById(R.id.editTextApellido);
+        txtdni = findViewById(R.id.editTextDNI);
+        txtdireccion = findViewById(R.id.editTextDireccion);
+        txttelefono = findViewById(R.id.editTextTelefono);
 
-        spinnerCargo=findViewById(R.id.spinnerCargo);
+        spinnerCargo = findViewById(R.id.spinnerCargo);
         spinnerCargo.setEnabled(false);
 
-        actualizarButton=findViewById(R.id.actualizarButton);
+        actualizarButton = findViewById(R.id.actualizarButton);
+
+        agregarUsuario = findViewById(R.id.agregarUsuario);
+        eliminarUsuarioBtn = findViewById(R.id.eliminarUsuario);
 
         editarImage = findViewById(R.id.editar_personal);
 
-        clicEditar();
-        Connection connection=ConexionDB.obtenerConexion();
-
+        // Obtener el valor de id_personal de la intención
         Intent intent = getIntent();
-        int id_personal = intent.getIntExtra("id_personal", 0);
-        if (id_personal!=0) {
+        id_personal = intent.getIntExtra("id_personal", 0);
+
+        clicEditar();
+        if (id_personal != 0) {
             // Utiliza el valor de id_personal como desees en tu actividad
             Toast.makeText(getApplicationContext(), "Personal cargado correctamente", Toast.LENGTH_SHORT).show();
-            obtenerPersonal(connection,id_personal);
+            Connection connection = ConexionDB.obtenerConexion();
+            obtenerPersonal(connection, id_personal);
 
-            //Spinner
+            // Spinner
             List<String> cargo;
             cargo = obtenerCargos(connection);
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, cargo);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerCargo.setAdapter(adapter);
 
-            clicActualizar(connection,id_personal);
+            clicActualizar(connection);
 
-        }else{
+            // Comprueba si existe un usuario para este id_personal
+            usuarioCreado = existeUsuario(connection, id_personal);
+
+            // Deshabilita el botón de "Eliminar Usuario" si no hay un usuario creado
+            eliminarUsuarioBtn.setVisibility(usuarioCreado ? View.VISIBLE : View.GONE);
+
+            // Deshabilita el botón de "Agregar Usuario" si ya existe un usuario para este personal
+            agregarUsuario.setVisibility(usuarioCreado ? View.GONE : View.VISIBLE);
+
+
+        } else {
             Toast.makeText(getApplicationContext(), "id nulo", Toast.LENGTH_SHORT).show();
         }
 
-    }
-    public void obtenerPersonal(Connection connection,int id_personal){
+        agregarUsuario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(ModificarPersonal.this, AgregarUsuario.class);
+                intent1.putExtra("id_personal", id_personal);
+                startActivity(intent1);
+            }
+        });
 
-        String query= "SELECT nombre,apellido,dni,direccion,telefono,cargo.nombre_cargo FROM personal INNER JOIN cargo on personal.id_cargo = cargo.id_cargo WHERE id_personal = "+id_personal;
+
+        clicEliminarUsuario();
+    }
+
+    public void obtenerPersonal(Connection connection, int id_personal) {
+        String query = "SELECT nombre,apellido,dni,direccion,telefono,cargo.nombre_cargo FROM personal " +
+                "INNER JOIN cargo ON personal.id_cargo = cargo.id_cargo WHERE id_personal = " + id_personal;
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -93,16 +121,15 @@ public class ModificarPersonal extends AppCompatActivity {
                 txtdireccion.setText(direccion);
                 txttelefono.setText(telefono);
                 spinnerCargo.setSelection(id_personal);
-
             }
             statement.close();
             resultSet.close();
-        }catch(Exception e){
+        } catch (Exception e) {
             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void clicActualizar(Connection connection,int id_personal){
+    public void clicActualizar(Connection connection) {
         actualizarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,22 +141,24 @@ public class ModificarPersonal extends AppCompatActivity {
                 String cargo = (String) spinnerCargo.getSelectedItem();
 
                 try {
-                    //Obtener id_cargo
-                    String cargoquery="SELECT id_cargo FROM cargo where nombre_cargo LIKE '%"+cargo+"%'";
+                    // Obtener id_cargo
+                    String cargoquery = "SELECT id_cargo FROM cargo WHERE nombre_cargo LIKE '%" + cargo + "%'";
                     Statement st = connection.createStatement();
                     ResultSet resultSet = st.executeQuery(cargoquery);
-                    String idcargo=null;
+                    String idcargo = null;
                     if (resultSet.next()) {
                         idcargo = resultSet.getString("id_cargo");
                     }
 
-                    //Actualizar personal
-                    String query = "UPDATE personal SET nombre = '" + nombre + "', apellido = '" + apellido + "', dni = '" + dni + "', direccion = '" + direccion + "', telefono = '" + telefono + "',id_cargo = '"+idcargo+"' where id_personal= " + id_personal;
+                    // Actualizar personal
+                    String query = "UPDATE personal SET nombre = '" + nombre + "', apellido = '" + apellido +
+                            "', dni = '" + dni + "', direccion = '" + direccion + "', telefono = '" + telefono +
+                            "', id_cargo = '" + idcargo + "' WHERE id_personal = " + id_personal;
 
                     int rowsAffected = st.executeUpdate(query);
                     if (rowsAffected > 0) {
                         Toast.makeText(getApplicationContext(), "Personal actualizado exitosamente", Toast.LENGTH_SHORT).show();
-                        //Te redirige al crud personal
+                        // Te redirige al crud personal
                         Intent intent = new Intent(ModificarPersonal.this, Crud_Personal.class);
                         startActivity(intent);
                     } else {
@@ -143,12 +172,12 @@ public class ModificarPersonal extends AppCompatActivity {
         });
     }
 
-
-    public void clicEditar(){
+    public void clicEditar() {
         editarImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                actualizarButton.setVisibility(View.VISIBLE);
+                // Si el usuario ya está creado, no muestra los botones "Agregar Usuario" y "Eliminar Usuario"
+
 
                 txtnombre.setEnabled(true);
                 txtnombre.setTextColor(Color.BLACK);
@@ -167,12 +196,13 @@ public class ModificarPersonal extends AppCompatActivity {
 
                 spinnerCargo.setEnabled(true);
 
+                // Muestra el botón "Actualizar" siempre que se presione "Editar Personal"
+                actualizarButton.setVisibility(View.VISIBLE);
             }
         });
     }
 
     public List<String> obtenerCargos(Connection connection) {
-
         List<String> listaCargos = new ArrayList<>();
 
         try {
@@ -191,7 +221,57 @@ public class ModificarPersonal extends AppCompatActivity {
             e.printStackTrace();
         }
         return listaCargos;
-
     }
 
+    public boolean existeUsuario(Connection connection, int id_personal) {
+        try {
+            String query = "SELECT COUNT(*) as count FROM usuario WHERE id_personal = " + id_personal;
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            if (resultSet.next()) {
+                int count = resultSet.getInt("count");
+                return count > 0;
+            }
+
+            statement.close();
+            resultSet.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public void clicEliminarUsuario() {
+        eliminarUsuarioBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Lógica para eliminar el usuario con id_personal
+                eliminarUsuario(id_personal);
+            }
+        });
+    }
+
+    public void eliminarUsuario(int id_personal) {
+        Connection connection = ConexionDB.obtenerConexion();
+
+        try {
+            String query = "DELETE FROM usuario WHERE id_personal = " + id_personal;
+            Statement statement = connection.createStatement();
+
+            int rowsAffected = statement.executeUpdate(query);
+            statement.close();
+
+            if (rowsAffected > 0) {
+                Toast.makeText(getApplicationContext(), "Usuario eliminado exitosamente", Toast.LENGTH_SHORT).show();
+                // Actualiza la lista de usuarios si es necesario
+                // Aquí puedes refrescar la lista de usuarios, eliminar el usuario de la lista, etc.
+            } else {
+                Toast.makeText(getApplicationContext(), "No se pudo eliminar el usuario", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
