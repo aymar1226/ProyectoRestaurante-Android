@@ -145,21 +145,25 @@ public class GeneradorPDF {
         });
     }
 
-    public void cargarImagen(String imagePath){
+    public CompletableFuture cargarImagen(String imagePath){
+        CompletableFuture<Void> completableFuture = new CompletableFuture<>();
+
         StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("imagenes/"+imagePath);
         imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
             try {
                 String imageUrl = uri.toString();
                 ImageData imageData = ImageDataFactory.create(imageUrl);
                 imagenFire = new Image(imageData);
+                completableFuture.complete(null);
 
             } catch (Exception e) {
                 Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_SHORT).show();
+                completableFuture.completeExceptionally(e); // Completa el CompletableFuture con una excepción en caso de fallo
             }
         }).addOnFailureListener(exception -> {
 
         });
-
+        return  completableFuture;
     }
 
 
@@ -168,16 +172,23 @@ public class GeneradorPDF {
 
         //Metodos asincronicos
         cargarFondo();
-        cargarImagen("icon.png");
+        cargarImagen("icon.png").thenAccept(result->{
 
-        CompletableFuture<List<Image>> obtenerImagenesFuture = obtenerImgFirebase();
+            CompletableFuture<List<Image>> obtenerImagenesFuture = obtenerImgFirebase();
 
-        obtenerImagenesFuture.thenAccept(listaImagenes -> {
-            procesarImagenes(listaImagenes);
+            obtenerImagenesFuture.thenAccept(listaImagenes -> {
+                procesarImagenes(listaImagenes);
+            }).exceptionally(e -> {
+                Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_SHORT).show();
+                return null;
+            });
+
         }).exceptionally(e -> {
-            Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "No se pudo cargar la imagen del titulo", Toast.LENGTH_SHORT).show();
             return null;
         });
+
+
     }
 
     public void procesarImagenes(List<Image> listaImagenes){
@@ -234,7 +245,6 @@ public class GeneradorPDF {
 
         //Definir el estilo de las celdas
         Style cellStyle = new Style();
-        cellStyle.setMarginBottom(20);
         cellStyle.setBorder(Border.NO_BORDER);
 
         //Creacion del pdf
@@ -284,6 +294,7 @@ public class GeneradorPDF {
 
                 //Editar Imagen
                 Image imagenPlato = listaImagenes.get(i);
+                imagenPlato.setMarginBottom(20);
                 imagenPlato.setWidth(180);
                 imagenPlato.setHeight(110);
 
@@ -293,29 +304,22 @@ public class GeneradorPDF {
                 Cell infoCell = new Cell();
                 infoCell.addStyle(cellStyle);
 
+                //Agregar el contenido a las celdas
+                infoCell.add(platoInfo);
+                imageCell.add(imagenPlato);
+
                 if(i%2!=0) {
-                    table.setHorizontalAlignment(HorizontalAlignment.RIGHT);
                     imagenPlato.setHorizontalAlignment(HorizontalAlignment.LEFT);
 
-                    //Agregar el contenido a las celdas
-                    infoCell.add(platoInfo);
-                    imageCell.add(imagenPlato);
 
-                    table.addCell(platoInfo);
+                    table.addCell(infoCell);
                     table.addCell(imageCell);
                 }else{
-
-                    table.setHorizontalAlignment(HorizontalAlignment.LEFT);
                     imagenPlato.setHorizontalAlignment(HorizontalAlignment.RIGHT);
-
-                    //Agregar el contenido a las celdas
-                    imageCell.add(imagenPlato);
-                    infoCell.add(platoInfo);
 
                     // Agregar las celdas a la tabla
                     table.addCell(imageCell);
                     table.addCell(infoCell);
-
                 }
             }
             document.add(table);
