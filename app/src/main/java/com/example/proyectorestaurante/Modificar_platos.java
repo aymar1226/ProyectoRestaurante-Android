@@ -210,8 +210,13 @@ public class Modificar_platos extends AppCompatActivity {
 
                     //Actualizar plato
                     String image_name=imageUploader.getImageName();
-                    String query = "UPDATE plato SET nombre = '" + nombre + "', descripcion = '" + descripcion + "', precio = '" + precio + "',id_categoria = '"+idcategoria+"',imagen = '"+image_name+"' where id_plato= " + id_plato;
+                    String query;
+                    if(image_name!=null){
+                        query = "UPDATE plato SET nombre = '" + nombre + "', descripcion = '" + descripcion + "', precio = '" + precio + "',id_categoria = '" + idcategoria + "',imagen = '" + image_name + "' where id_plato= " + id_plato;
+                    }else {
+                        query = "UPDATE plato SET nombre = '" + nombre + "', descripcion = '" + descripcion + "', precio = '" + precio + "',id_categoria = '" + idcategoria + "' where id_plato= " + id_plato;
 
+                    }
 
 
                     int rowsAffected = st.executeUpdate(query);
@@ -241,16 +246,21 @@ public class Modificar_platos extends AppCompatActivity {
 
     public void gestionarImagen(){
         //Subir imagen
-        imageUploader.subirImagen(new Runnable() {
-            @Override
-            public void run() {
-                //Te redirige al crud plato cuando acabe de subir la imagen
-                Intent intent = new Intent(Modificar_platos.this, Crud_Platos.class);
-                startActivity(intent);
-            }
-        });
-        //Eliminar imagen
-        imageUploader.eliminarImagen(imagen_ruta);
+        if(imageUploader.getImageName()!=null) {
+            imageUploader.subirImagen(new Runnable() {
+                @Override
+                public void run() {
+                    //Te redirige al crud plato cuando acabe de subir la imagen
+                    Intent intent = new Intent(Modificar_platos.this, Crud_Platos.class);
+                    startActivity(intent);
+                }
+            });
+            //Eliminar imagen
+            imageUploader.eliminarImagen(imagen_ruta);
+        }else {
+            Intent intent = new Intent(Modificar_platos.this, Crud_Platos.class);
+            startActivity(intent);
+        }
     }
 
 }

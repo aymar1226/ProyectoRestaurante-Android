@@ -81,11 +81,12 @@ public class GeneradorPDF {
                 String nombrePlato = resultSet.getString("nombre");
                 double precio = resultSet.getDouble("precio");
                 String imagen = resultSet.getString("imagen");
+
                 String plato;
                 if(a%2==0) {
-                    plato = nombrePlato + "\n\n"+precio+" - - - - - - - - - - ";
+                    plato = nombrePlato + "\n\nS/"+precio+" - - - - - - - - - - ";
                 }else {
-                    plato = nombrePlato + "\n\n - - - - - - - - - - " + precio;
+                    plato = nombrePlato + "\n\n - - - - - - - - - - S/" + precio;
                 }
                 Paragraph platoInfo = new Paragraph(plato);
 
@@ -102,7 +103,6 @@ public class GeneradorPDF {
 
     public CompletableFuture<List<Image>> obtenerImgFirebase() {
         List<CompletableFuture<Image>> futures = new ArrayList<>();
-
         int imagenesTotales = listaNombreImagenes.size();
         for (int i = 0; i < imagenesTotales; i++) {
             String imagen_nombre = listaNombreImagenes.get(i);
@@ -173,160 +173,159 @@ public class GeneradorPDF {
         CompletableFuture<List<Image>> obtenerImagenesFuture = obtenerImgFirebase();
 
         obtenerImagenesFuture.thenAccept(listaImagenes -> {
-            // Cargar la fuente personalizada desde la carpeta 'assets'
-            Context context = mContext;
-            AssetManager assetManager = context.getAssets();
-
-            //Cargar la fuente personalizada
-            PdfFont customFont = null;
-            try {
-                InputStream fontStream = assetManager.open("fuente.ttf");
-
-                // Copiar el archivo de fuente en el almacenamiento interno temporal del dispositivo
-                File tempFile = File.createTempFile("temp", ".ttf");
-                FileOutputStream out = new FileOutputStream(tempFile);
-                byte[] buffer = new byte[fontStream.available()];
-                fontStream.read(buffer);
-                out.write(buffer);
-                out.close();
-
-                customFont = PdfFontFactory.createFont(tempFile.getAbsolutePath(), PdfEncodings.IDENTITY_H, true);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            // Crear la tabla para el menú
-            Table table = new Table(2); // 2 columnas (imagen y texto)
-            table.setMarginBottom(20);
-            table.setMarginLeft(40);
-            table.setBorder(Border.NO_BORDER);
-
-            // Crear la tabla inversa para el menú
-            Table inverseTable = new Table(2); // 2 columnas (texto Y imagen)
-            inverseTable.setMarginBottom(30);
-            inverseTable.setHorizontalAlignment(HorizontalAlignment.RIGHT);
-            inverseTable.setMarginRight(40);
-            inverseTable.setBorder(Border.NO_BORDER);
-
-
-            //Crear tabla para el Titulo
-            Table titleTable = new Table(2); // 2 columnas (imagen y texto)
-            titleTable.setMarginLeft(70);
-            titleTable.setMarginTop(50);
-            titleTable.setMarginBottom(50);
-            titleTable.setBorder(Border.NO_BORDER);
-
-            //Color del texto
-            Color color = new DeviceRgb(0x71, 0x23, 0x23); // Código de color hexadecimal #712323 (rojo)
-
-            //Definir el estilo del texto
-            Style textStyle = new Style();
-            textStyle.setFontSize(27);
-            textStyle.setFontColor(color);
-
-            //Definir el estilo del titulo
-            Style titleStyle = new Style();
-            titleStyle.setFontSize(40);
-            titleStyle.setFontColor(color);
-            titleStyle.setMarginLeft(10);
-            titleStyle.setVerticalAlignment(VerticalAlignment.MIDDLE);
-            titleStyle.setHorizontalAlignment(HorizontalAlignment.LEFT);
-
-            //Definir el estilo de las celdas
-            Style cellStyle = new Style();
-            cellStyle.setBorder(Border.NO_BORDER);
-
-            //Creacion del pdf
-            try {
-                String filePath = mContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS) + "/cartilla.pdf";
-
-                PdfDocument pdf = new PdfDocument(new PdfWriter(filePath));
-                Document document = new Document(pdf, PageSize.A4);
-
-                // Agregar el manejador de eventos de imagen de fondo
-                BackgroundImageEventHandler eventHandler = new BackgroundImageEventHandler(fondo);
-                pdf.addEventHandler(PdfDocumentEvent.END_PAGE, eventHandler);
-
-                //Definir y agregar titulo
-                String titleText = "HINOJO RESTAURANTE";
-                Paragraph title = new Paragraph(titleText);
-                title.addStyle(titleStyle);
-                title.setFont(customFont);
-
-                //Definir y agregar logo
-                Image titleImage = imagenFire;
-                titleImage.setWidth(175);
-                titleImage.setHeight(165);
-                titleImage.setMarginRight(10);
-                titleImage.setMarginTop(0);
-                titleImage.setHorizontalAlignment(HorizontalAlignment.RIGHT);
-
-                Cell titleCell = new Cell();
-                titleCell.addStyle(cellStyle);
-                Cell logoCell = new Cell();
-                logoCell.addStyle(cellStyle);
-
-                logoCell.add(titleImage);
-                titleCell.add(title);
-
-                titleTable.addCell(logoCell);
-                titleTable.addCell(titleCell);
-
-                document.add(titleTable);
-
-                int totaldatos = listaImagenes.size();
-
-                for (int i = 0; i < totaldatos; i++) {
-
-                    Paragraph platoInfo = listaPlatos.get(i).setFont(customFont);
-                    platoInfo.addStyle(textStyle);
-
-                    //Editar Imagen
-                    Image imagenPlato = listaImagenes.get(i);
-                    imagenPlato.setWidth(180);
-                    imagenPlato.setHeight(110);
-
-
-                    // Crear celdas para la imagen y la información del plato
-                    Cell imageCell = new Cell();
-                    imageCell.addStyle(cellStyle);
-                    Cell infoCell = new Cell();
-                    infoCell.addStyle(cellStyle);
-
-                    if(i%2!=0) {
-                        //Agregar el contenido a las celdas
-                        infoCell.add(platoInfo);
-                        imageCell.add(imagenPlato);
-
-                        // Agregar las celdas a la tabla
-                        inverseTable.addCell(infoCell);
-                        inverseTable.addCell(imageCell);
-
-                        document.add(inverseTable);
-                    }else{
-                        //Agregar el contenido a las celdas
-                        imageCell.add(imagenPlato);
-                        infoCell.add(platoInfo);
-
-                        // Agregar las celdas a la tabla
-                        table.addCell(imageCell);
-                        table.addCell(infoCell);
-
-                        document.add(table);
-
-                    }
-                }
-
-                document.close();
-                subirPdfFirebase(filePath);
-                pdf.close();
-            } catch (FileNotFoundException e) {
-                Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
+            procesarImagenes(listaImagenes);
         }).exceptionally(e -> {
             Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_SHORT).show();
             return null;
         });
+    }
+
+    public void procesarImagenes(List<Image> listaImagenes){
+        // Cargar la fuente personalizada desde la carpeta 'assets'
+        Context context = mContext;
+        AssetManager assetManager = context.getAssets();
+
+        //Cargar la fuente personalizada
+        PdfFont customFont = null;
+        try {
+            InputStream fontStream = assetManager.open("fuente.ttf");
+
+            // Copiar el archivo de fuente en el almacenamiento interno temporal del dispositivo
+            File tempFile = File.createTempFile("temp", ".ttf");
+            FileOutputStream out = new FileOutputStream(tempFile);
+            byte[] buffer = new byte[fontStream.available()];
+            fontStream.read(buffer);
+            out.write(buffer);
+            out.close();
+
+            customFont = PdfFontFactory.createFont(tempFile.getAbsolutePath(), PdfEncodings.IDENTITY_H, true);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Crear la tabla para el menú
+        Table table = new Table(2); // 2 columnas (imagen y texto)
+        table.setMarginBottom(20);
+        table.setHorizontalAlignment(HorizontalAlignment.CENTER);
+        table.setBorder(Border.NO_BORDER);
+
+        //Crear tabla para el Titulo
+        Table titleTable = new Table(2); // 2 columnas (imagen y texto)
+        titleTable.setMarginLeft(70);
+        titleTable.setMarginTop(50);
+        titleTable.setMarginBottom(50);
+        titleTable.setBorder(Border.NO_BORDER);
+
+        //Color del texto
+        Color color = new DeviceRgb(0x71, 0x23, 0x23); // Código de color hexadecimal #712323 (rojo)
+
+        //Definir el estilo del texto
+        Style textStyle = new Style();
+        textStyle.setFontSize(27);
+        textStyle.setFontColor(color);
+
+        //Definir el estilo del titulo
+        Style titleStyle = new Style();
+        titleStyle.setFontSize(40);
+        titleStyle.setFontColor(color);
+        titleStyle.setMarginLeft(10);
+        titleStyle.setVerticalAlignment(VerticalAlignment.MIDDLE);
+        titleStyle.setHorizontalAlignment(HorizontalAlignment.LEFT);
+
+        //Definir el estilo de las celdas
+        Style cellStyle = new Style();
+        cellStyle.setMarginBottom(20);
+        cellStyle.setBorder(Border.NO_BORDER);
+
+        //Creacion del pdf
+        try {
+            String filePath = mContext.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS) + "/cartilla.pdf";
+
+            PdfDocument pdf = new PdfDocument(new PdfWriter(filePath));
+            Document document = new Document(pdf, PageSize.A4);
+
+            // Agregar el manejador de eventos de imagen de fondo
+            BackgroundImageEventHandler eventHandler = new BackgroundImageEventHandler(fondo);
+            pdf.addEventHandler(PdfDocumentEvent.END_PAGE, eventHandler);
+
+            //Definir y agregar titulo
+            String titleText = "HINOJO RESTAURANTE";
+            Paragraph title = new Paragraph(titleText);
+            title.addStyle(titleStyle);
+            title.setFont(customFont);
+
+            //Definir y agregar logo
+            Image titleImage = imagenFire;
+            titleImage.setWidth(175);
+            titleImage.setHeight(165);
+            titleImage.setMarginRight(10);
+            titleImage.setMarginTop(0);
+            titleImage.setHorizontalAlignment(HorizontalAlignment.RIGHT);
+
+            Cell titleCell = new Cell();
+            titleCell.addStyle(cellStyle);
+            Cell logoCell = new Cell();
+            logoCell.addStyle(cellStyle);
+
+            logoCell.add(titleImage);
+            titleCell.add(title);
+
+            titleTable.addCell(logoCell);
+            titleTable.addCell(titleCell);
+
+            document.add(titleTable);
+
+            int totaldatos = listaImagenes.size();
+
+            for (int i = 0; i < totaldatos; i++) {
+
+                Paragraph platoInfo = listaPlatos.get(i).setFont(customFont);
+                platoInfo.addStyle(textStyle);
+
+                //Editar Imagen
+                Image imagenPlato = listaImagenes.get(i);
+                imagenPlato.setWidth(180);
+                imagenPlato.setHeight(110);
+
+                // Crear celdas para la imagen y la información del plato
+                Cell imageCell = new Cell();
+                imageCell.addStyle(cellStyle);
+                Cell infoCell = new Cell();
+                infoCell.addStyle(cellStyle);
+
+                if(i%2!=0) {
+                    table.setHorizontalAlignment(HorizontalAlignment.RIGHT);
+                    imagenPlato.setHorizontalAlignment(HorizontalAlignment.LEFT);
+
+                    //Agregar el contenido a las celdas
+                    infoCell.add(platoInfo);
+                    imageCell.add(imagenPlato);
+
+                    table.addCell(platoInfo);
+                    table.addCell(imageCell);
+                }else{
+
+                    table.setHorizontalAlignment(HorizontalAlignment.LEFT);
+                    imagenPlato.setHorizontalAlignment(HorizontalAlignment.RIGHT);
+
+                    //Agregar el contenido a las celdas
+                    imageCell.add(imagenPlato);
+                    infoCell.add(platoInfo);
+
+                    // Agregar las celdas a la tabla
+                    table.addCell(imageCell);
+                    table.addCell(infoCell);
+
+                }
+            }
+            document.add(table);
+
+            document.close();
+            subirPdfFirebase(filePath);
+            pdf.close();
+        } catch (FileNotFoundException e) {
+            Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
 

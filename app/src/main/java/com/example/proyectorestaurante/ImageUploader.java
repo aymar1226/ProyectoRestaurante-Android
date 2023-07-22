@@ -31,7 +31,7 @@ public class ImageUploader {
     private Activity activity;
     private StorageReference storageReference;
     private Uri imageUri;
-    private String imageName;
+    private String imageName=null;
 
     public ImageUploader(Activity activity, StorageReference storageReference) {
         this.activity = activity;
