@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.core.content.ContextCompat;
 
 import com.example.proyectorestaurante.Activity.ModificarPersonal;
+import com.example.proyectorestaurante.Clases.classlogin;
 import com.example.proyectorestaurante.ConexionDB;
 import com.example.proyectorestaurante.R;
 
@@ -33,6 +34,8 @@ public class PersonalAdapter extends ArrayAdapter<Players> {
     private ArrayList<Integer> selectedItemList = new ArrayList<>();
     private LinearLayout linearLayout;
     private ImageView eliminarImage, agregarImage;
+
+    private classlogin classlogin;
 
 
     public PersonalAdapter(Context context, int resource, List<Players> personList, ImageView agregar, ImageView eliminar) {
@@ -74,29 +77,33 @@ public class PersonalAdapter extends ArrayAdapter<Players> {
 
 
         // Clic largo
-        view.setOnLongClickListener(new View.OnLongClickListener() {
-            boolean isSelected = selectedItemList.contains(position);
+        if(classlogin.getRol()=="Administrador") {
+            agregarImage.setVisibility(View.VISIBLE);
+            view.setOnLongClickListener(new View.OnLongClickListener() {
+                boolean isSelected = selectedItemList.contains(position);
 
-            @Override
-            public boolean onLongClick(View v) {
-                itemselected = player.getId();
+                @Override
+                public boolean onLongClick(View v) {
+                    itemselected = player.getId();
 
-                // Verificar si el ítem ya está seleccionado
-                if (isSelected) {
-                    // Deseleccionar el ítem y restaurar el color de fondo original
-                    selectedItemList.remove(Integer.valueOf(position));
-                    agregarImage.setVisibility(View.VISIBLE);
-                    eliminarImage.setVisibility(View.GONE);
-                } else {
-                    // Seleccionar el ítem y cambiar el color de fondo
-                    selectedItemList.add(position);
-                    agregarImage.setVisibility(View.GONE);
-                    eliminarImage.setVisibility(View.VISIBLE);
+                    // Verificar si el ítem ya está seleccionado
+                    if (isSelected) {
+                        // Deseleccionar el ítem y restaurar el color de fondo original
+                        selectedItemList.remove(Integer.valueOf(position));
+                        agregarImage.setVisibility(View.VISIBLE);
+                        eliminarImage.setVisibility(View.GONE);
+                    } else {
+                        // Seleccionar el ítem y cambiar el color de fondo
+                        selectedItemList.add(position);
+                        agregarImage.setVisibility(View.GONE);
+                        eliminarImage.setVisibility(View.VISIBLE);
+                    }
+                    notifyDataSetChanged();
+                    return false;
                 }
-                notifyDataSetChanged();
-                return false;
-            }
-        });
+            });
+        }
+
         //Clic corto
         View finalView = view;
         view.setOnClickListener(new View.OnClickListener() {
@@ -112,30 +119,32 @@ public class PersonalAdapter extends ArrayAdapter<Players> {
                     notifyDataSetChanged();
                 }else {
                     finalView.setPressed(true);
-                    Intent intent = new Intent(mContext, ModificarPersonal.class);
-                    intent.putExtra("id_personal", clicPersonal);
-                    mContext.startActivity(intent);
+
+                    if(classlogin.getRol()=="Administrador") {
+                        Intent intent = new Intent(mContext, ModificarPersonal.class);
+                        intent.putExtra("id_personal", clicPersonal);
+                        mContext.startActivity(intent);
+                    }
                 }
 
                 //Toast.makeText(mContext, "Clic en: " + itemselected, Toast.LENGTH_SHORT).show();
-
-
             }
         });
 
         //Eliminar personal
-        eliminarImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                mPersonList.remove(position);
-                notifyDataSetChanged();
-                eliminarPersonalDB(itemselected);
-                Toast.makeText(mContext, "Personal eliminado correctamente"+itemselected, Toast.LENGTH_SHORT).show();
-                agregarImage.setVisibility(View.VISIBLE);
-                eliminarImage.setVisibility(View.GONE);
-            }
-        });
+        if(classlogin.getRol()=="Administrador") {
+            eliminarImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mPersonList.remove(position);
+                    notifyDataSetChanged();
+                    eliminarPersonalDB(itemselected);
+                    Toast.makeText(mContext, "Personal eliminado correctamente" + itemselected, Toast.LENGTH_SHORT).show();
+                    agregarImage.setVisibility(View.VISIBLE);
+                    eliminarImage.setVisibility(View.GONE);
+                }
+            });
+        }
 
 
         return view;
