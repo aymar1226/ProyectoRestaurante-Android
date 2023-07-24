@@ -267,6 +267,7 @@ public class ModificarPersonal extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Usuario eliminado exitosamente", Toast.LENGTH_SHORT).show();
                 // Actualiza la lista de usuarios si es necesario
                 // Aquí puedes refrescar la lista de usuarios, eliminar el usuario de la lista, etc.
+                recreate();
             } else {
                 Toast.makeText(getApplicationContext(), "No se pudo eliminar el usuario", Toast.LENGTH_SHORT).show();
             }

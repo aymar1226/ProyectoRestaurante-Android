@@ -65,6 +65,9 @@
         <activity
             android:name=".Activity.AgregarPlatos"
             android:exported="false" />
+        <activity
+            android:name=".Activity.AgregarUsuario"
+            android:exported="false" />
     </application>
 
 </manifest>
