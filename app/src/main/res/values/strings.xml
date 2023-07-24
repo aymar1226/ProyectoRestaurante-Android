@@ -44,5 +44,6 @@
 
 
     <string name="Cargo">cargo_personal</string>
+    <string name="agregar_usuario">Agregar Usuario</string>
 
 </resources>

@@ -1,8 +1,10 @@
 package com.example.proyectorestaurante.Activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -27,6 +29,8 @@ public class Crud_Personal extends AppCompatActivity {
     ListView listView;
     EditText txt_buscar;
     ImageView boton_buscar,boton_agregar,boton_eliminar;
+
+    Button crear_usuario;
 
     boolean buscarOn=false;
     List<Players> userList = new ArrayList<>();
@@ -58,6 +62,7 @@ public class Crud_Personal extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,7 +140,9 @@ public class Crud_Personal extends AppCompatActivity {
     }
 
 
+    public void agregaruser(View view) {
 
+    }
 }
 
 

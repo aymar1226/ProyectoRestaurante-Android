@@ -29,7 +29,7 @@ public class classlogin {
 
     public static boolean validarCredenciales(String usuario, String password){
         try(Connection connection = ConexionDB.obtenerConexion()){
-            String query = "SELECT COUNT(*) FROM usuario WHERE correo = ? AND contraseña = ?";
+            String query = "SELECT COUNT(*) FROM usuario WHERE correo = ? AND CAST(DECRYPTBYPASSPHRASE('L4f4ry3t3nCrypt4d0',contraseña) as VARCHAR(MAX)) = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, usuario);
             statement.setString(2, password);
