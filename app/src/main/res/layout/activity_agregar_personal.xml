@@ -94,12 +94,14 @@
             android:layout_marginBottom="20dp"/>
 
 
-        <EditText
-            android:id="@+id/txtCargo"
+        <Spinner
+            android:id="@+id/spinner_personal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Cargo"
-            android:layout_marginBottom="20dp"/>
+            android:layout_height="40dp"
+            android:layout_marginBottom="20dp"
+            android:spinnerMode="dropdown"
+            >
+        </Spinner>
 
         <EditText
             android:id="@+id/txtDireccion"

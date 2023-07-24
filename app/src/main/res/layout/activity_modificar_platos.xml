@@ -27,7 +27,7 @@
             app:layout_constraintTop_toTopOf="parent">
         </TextView>
         <ImageView
-            android:id="@+id/editar_personal"
+            android:id="@+id/editar_plato"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginEnd="50dp"
@@ -119,12 +119,12 @@
                 android:id="@+id/textViewDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Apellido"
+                android:text="Descripcion"
                 android:layout_marginStart="8dp"
                 android:textColor="@color/black"/>
 
             <EditText
-                android:id="@+id/editTextApellido"
+                android:id="@+id/editTextDescripcion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -138,84 +138,74 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Categoria"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/black"/>
+            <Spinner
+                android:id="@+id/spinnerCategoria"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DNI"
+                android:text="Precio"
                 android:layout_marginStart="8dp"
                 android:textColor="@color/black"/>
 
             <EditText
-                android:id="@+id/editTextDNI"
+                android:id="@+id/editTextPrecio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:enabled="false"
                 android:textColor="@color/colorSelected"
                 android:inputType="number"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Direccion"
-                android:layout_marginStart="8dp"
-                android:textColor="@color/black"/>
-
-            <EditText
-                android:id="@+id/editTextDireccion"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:enabled="false"
-                android:textColor="@color/colorSelected"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cargo"
-                android:layout_marginStart="8dp"
-                android:textColor="@color/black"/>
-            <Spinner
-                android:id="@+id/spinnerCargo"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginStart="8dp"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
+                android:orientation="vertical"
+                android:padding="10dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Imagen actual: "
+                        android:textColor="@color/black"
+                        android:layout_gravity="center_vertical"/>
+                    <ImageView
+                        android:id="@+id/imagenActual"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginStart="40dp"/>
+                </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Telefono"
-                android:layout_marginStart="8dp"
-                android:textColor="@color/black"/>
+                <Button
+                    android:id="@+id/btn_select_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Seleccionar nueva imagen"
+                    android:layout_gravity="center"
+                    android:enabled="false"/>
+            </LinearLayout>
 
-            <EditText
-                android:id="@+id/editTextTelefono"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:enabled="false"
-                android:textColor="@color/colorSelected"/>
         </LinearLayout>
-
 
 
     </LinearLayout>

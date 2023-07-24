@@ -43,7 +43,7 @@
             android:id="@+id/agregar_usuario"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginEnd="50dp"
             android:onClick="IraAgregar_personal"
             android:src="@drawable/agregar_usuario"
             app:layout_constraintBottom_toBottomOf="@id/text_personal"
@@ -55,7 +55,7 @@
             android:id="@+id/eliminar_usuario"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginEnd="50dp"
             android:src="@drawable/eliminar"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/text_personal"
@@ -114,9 +114,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layout_header"
         app:layout_constraintVertical_bias="0.0"
-        android:background="@drawable/list_item_selector"
+        android:divider="#00000000"
         android:dividerHeight="8dp"
-        android:clickable="false"
         />
 
 

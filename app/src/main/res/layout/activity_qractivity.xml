@@ -38,19 +38,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/text_platos">
         </ImageView>
-
-        <ImageView
-            android:id="@+id/eliminar_plato"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="40dp"
-            android:src="@drawable/eliminar"
-            app:tint="#000"
-            app:layout_constraintBottom_toBottomOf="@id/text_platos"
-            app:layout_constraintEnd_toEndOf="@+id/image_menu"
-            app:layout_constraintTop_toTopOf="@id/text_platos"
-            android:visibility="gone">
-        </ImageView>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -68,18 +55,50 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
-        android:id="@+id/qr"
+        android:id="@+id/qrCartilla"
         android:layout_width="267dp"
         android:layout_height="497dp"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="72dp"
-        android:layout_marginBottom="85dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_header"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/qr_restaurante" />
+
+    <ImageView
+        android:layout_width="312dp"
+        android:layout_height="523dp"
+        android:layout_marginTop="84dp"
+        android:src="@drawable/cuadro_qr"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <Button
+        android:id="@+id/generatePdf"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="584dp"
+        android:text="Generar qr"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="296dp"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

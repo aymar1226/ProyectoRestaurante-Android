@@ -1,27 +1,12 @@
 package com.example.proyectorestaurante.Activity;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.media.Image;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.StrictMode;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Space;
-import android.widget.TextView;
 import android.widget.Toast;
-import androidx.cardview.widget.CardView;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,30 +14,23 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.proyectorestaurante.ConexionDB;
 import com.example.proyectorestaurante.R;
-import com.example.proyectorestaurante.recycler.Adapter;
+import com.example.proyectorestaurante.recycler.PersonalAdapter;
 import com.example.proyectorestaurante.recycler.Players;
-import com.google.api.services.drive.model.User;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Crud_Personal extends AppCompatActivity {
     ListView listView;
-    TextView nombre,apellido,text_personal,cargo;
     EditText txt_buscar;
-    ImageView boton_buscar,boton_agregar;
+    ImageView boton_buscar,boton_agregar,boton_eliminar;
 
-
-    final int[] idUsuarioSeleccionado = new int[1];
-    CardView tarjetaSeleccionada;
-    boolean buscarOn=false,isLongClickActive=false;
+    boolean buscarOn=false;
     List<Players> userList = new ArrayList<>();
-    Adapter adapter;
+    PersonalAdapter personalAdapter;
 
 
     public void IraAgregar_personal(View view) {
@@ -85,28 +63,31 @@ public class Crud_Personal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crud_personal);
         //Elementos
-        txt_buscar=findViewById(R.id.buscar_personal);
-        boton_buscar=findViewById(R.id.boton_buscar);
+        txt_buscar = findViewById(R.id.buscar_personal);
         listView = findViewById(R.id.listView);
-        boton_agregar=findViewById(R.id.agregar_usuario);
-
-        //Metodos
+        //botones
+        boton_buscar = findViewById(R.id.boton_buscar);
+        boton_agregar = findViewById(R.id.agregar_usuario);
+        boton_eliminar = findViewById(R.id.eliminar_usuario);
 
         //Buscar card
 
 
-        Connection connection =ConexionDB.obtenerConexion();
+        Connection connection = ConexionDB.obtenerConexion();
         obtenerYMostrarTarjetas(connection);
-        Buscar(connection);}
+        Buscar(connection);
+
+
+    }
     private void obtenerYMostrarTarjetas(Connection connection) {
         String texto = txt_buscar.getText().toString();
         String query;
         // Consulta SQL para seleccionar todos los registros de la tabla de usuarios
         if(buscarOn){
-            query = "SELECT id_personal, nombre, apellido, cargo FROM personal WHERE nombre LIKE '%" + texto + "%' OR apellido LIKE '%" + texto + "%'";
+            query = "SELECT id_personal, nombre, apellido, cargo.nombre_cargo, dni FROM personal INNER JOIN cargo on personal.id_cargo = cargo.id_cargo WHERE nombre LIKE '%" + texto + "%' OR apellido LIKE '%" + texto + "%'";
         }
         else {
-            query = "SELECT id_personal, nombre, apellido, cargo FROM personal";
+            query = "SELECT id_personal, nombre, apellido, cargo.nombre_cargo, dni FROM personal INNER JOIN cargo on personal.id_cargo = cargo.id_cargo";
         }
         try {
             Statement statement = connection.createStatement();
@@ -116,9 +97,10 @@ public class Crud_Personal extends AppCompatActivity {
                 int idUsuario = resultSet.getInt("id_personal");
                 String nombreUsuario = resultSet.getString("nombre");
                 String apellidoUsuario = resultSet.getString("apellido");
-                String cargo = resultSet.getString("cargo");
+                String cargo = resultSet.getString("nombre_cargo");
+                String dni = resultSet.getString("dni");
 
-                Players player = new Players(idUsuario, nombreUsuario, apellidoUsuario, cargo);
+                Players player = new Players(idUsuario, nombreUsuario, apellidoUsuario, cargo,dni);
                 userList.add(player);
 
 
@@ -126,8 +108,9 @@ public class Crud_Personal extends AppCompatActivity {
             statement.close();
             resultSet.close();
 
-            adapter=new Adapter(this, R.layout.content_personal, userList,boton_agregar);
-            listView.setAdapter(adapter);
+            personalAdapter =new PersonalAdapter(this, R.layout.content_personal, userList,boton_agregar,boton_eliminar);
+            listView.setAdapter(personalAdapter);
+
 
         }catch(Exception e){
                 Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -140,17 +123,18 @@ public class Crud_Personal extends AppCompatActivity {
             public void onClick(View v) {
                 String texto = txt_buscar.getText().toString();
                 if(!texto.isEmpty()){
-                    userList.clear();
                     buscarOn=true;
                 }
                 else {
                     buscarOn=false;
                 }
-                adapter.notifyDataSetChanged();
+                userList.clear();
                 obtenerYMostrarTarjetas(connection);
             }
         });
     }
+
+
 
 }
 
