@@ -357,7 +357,7 @@ public class GeneradorPDF {
                     // Ocurrió un error al subir el archivo
                     // Aquí puedes manejar el error o mostrar un mensaje de error al usuario
                     Toast.makeText(mContext, "El pdf no se pudo generar", Toast.LENGTH_SHORT).show();
-
+ 
                 });
     }
 }
