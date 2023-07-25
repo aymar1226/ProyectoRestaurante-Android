@@ -1,6 +1,6 @@
-package com.example.proyectorestaurante.Clases;
+package com.example.proyectorestaurante.auth;
 
-import com.example.proyectorestaurante.ConexionDB;
+import com.example.proyectorestaurante.utils.ConexionDB;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,9 +1,9 @@
-package com.example.proyectorestaurante.Clases;
+package com.example.proyectorestaurante.auth;
 
 import android.content.Context;
 
-import com.example.proyectorestaurante.ConexionDB;
-import com.example.proyectorestaurante.SessionManager;
+import com.example.proyectorestaurante.utils.ConexionDB;
+import com.example.proyectorestaurante.utils.SessionManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

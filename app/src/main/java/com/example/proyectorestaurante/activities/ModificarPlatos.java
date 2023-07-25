@@ -1,18 +1,12 @@
-package com.example.proyectorestaurante;
+package com.example.proyectorestaurante.activities;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.provider.OpenableColumns;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,29 +14,23 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
-import android.Manifest;
 
 
-import com.example.proyectorestaurante.Activity.AgregarPlatos;
-import com.example.proyectorestaurante.Activity.Crud_Personal;
-import com.example.proyectorestaurante.Activity.Crud_Platos;
-import com.example.proyectorestaurante.Activity.ModificarPersonal;
-import com.example.proyectorestaurante.recycler.Platos;
-import com.google.android.gms.tasks.OnFailureListener;
+import com.example.proyectorestaurante.R;
+import com.example.proyectorestaurante.utils.ConexionDB;
+import com.example.proyectorestaurante.utils.ImageUploader;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Modificar_platos extends AppCompatActivity {
+public class ModificarPlatos extends AppCompatActivity {
 
     ImageUploader imageUploader;
     private StorageReference storageReference;
@@ -76,7 +64,7 @@ public class Modificar_platos extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference();
 
         //Instancia de la clase para subir imagenes
-        imageUploader = new ImageUploader(Modificar_platos.this, storageReference);
+        imageUploader = new ImageUploader(ModificarPlatos.this, storageReference);
 
         selectImagenButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +74,7 @@ public class Modificar_platos extends AppCompatActivity {
         });
 
         clicEditar();
-        Connection connection=ConexionDB.obtenerConexion();
+        Connection connection= ConexionDB.obtenerConexion();
 
         Intent intent = getIntent();
         int id_plato = intent.getIntExtra("id_plato", 0);
@@ -251,14 +239,14 @@ public class Modificar_platos extends AppCompatActivity {
                 @Override
                 public void run() {
                     //Te redirige al crud plato cuando acabe de subir la imagen
-                    Intent intent = new Intent(Modificar_platos.this, Crud_Platos.class);
+                    Intent intent = new Intent(ModificarPlatos.this, Crud_Platos.class);
                     startActivity(intent);
                 }
             });
             //Eliminar imagen
             imageUploader.eliminarImagen(imagen_ruta);
         }else {
-            Intent intent = new Intent(Modificar_platos.this, Crud_Platos.class);
+            Intent intent = new Intent(ModificarPlatos.this, Crud_Platos.class);
             startActivity(intent);
         }
     }

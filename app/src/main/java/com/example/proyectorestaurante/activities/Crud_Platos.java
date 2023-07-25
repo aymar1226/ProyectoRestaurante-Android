@@ -1,32 +1,22 @@
-package com.example.proyectorestaurante.Activity;
+package com.example.proyectorestaurante.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.StrictMode;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.proyectorestaurante.ConexionDB;
+import com.example.proyectorestaurante.utils.ConexionDB;
 import com.example.proyectorestaurante.R;
-import com.example.proyectorestaurante.recycler.PersonalAdapter;
-import com.example.proyectorestaurante.recycler.Platos;
-import com.example.proyectorestaurante.recycler.PlatosAdapter;
-import com.example.proyectorestaurante.recycler.Players;
+import com.example.proyectorestaurante.models.Platos;
+import com.example.proyectorestaurante.adapters.PlatosAdapter;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;

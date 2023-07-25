@@ -1,4 +1,4 @@
-package com.example.proyectorestaurante.recycler;
+package com.example.proyectorestaurante.adapters;
 
 
 import android.content.Context;
@@ -8,17 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
-import com.example.proyectorestaurante.Activity.ModificarPersonal;
-import com.example.proyectorestaurante.Clases.classlogin;
-import com.example.proyectorestaurante.ConexionDB;
+import com.example.proyectorestaurante.activities.ModificarPersonal;
+import com.example.proyectorestaurante.utils.ConexionDB;
 import com.example.proyectorestaurante.R;
-import com.example.proyectorestaurante.SessionManager;
+import com.example.proyectorestaurante.utils.SessionManager;
+import com.example.proyectorestaurante.models.Personal;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,10 +25,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonalAdapter extends ArrayAdapter<Players> {
+public class PersonalAdapter extends ArrayAdapter<Personal> {
     private Context mContext;
     private int mResource;
-    private List<Players> mPersonList;
+    private List<Personal> mPersonList;
     boolean isSelected;
     int itemselected;
     private ArrayList<Integer> selectedItemList = new ArrayList<>();
@@ -37,7 +36,7 @@ public class PersonalAdapter extends ArrayAdapter<Players> {
 
     private SessionManager sessionManager;
 
-    public PersonalAdapter(Context context, int resource, List<Players> personList, ImageView agregar, ImageView eliminar) {
+    public PersonalAdapter(Context context, int resource, List<Personal> personList, ImageView agregar, ImageView eliminar) {
         super(context, resource, personList);
         mContext = context;
         mResource = resource;
@@ -57,7 +56,7 @@ public class PersonalAdapter extends ArrayAdapter<Players> {
         // Configura el contenido de la vista para mostrar los datos de la persona actual
         TextView nameTextView = view.findViewById(R.id.nombre_personal);
         TextView cargoTextView = view.findViewById(R.id.cargo_personal);
-        Players player = mPersonList.get(position);
+        Personal player = mPersonList.get(position);
         nameTextView.setText(player.getNombre()+" "+player.getApellido());
         cargoTextView.setText(player.getCargo());
 

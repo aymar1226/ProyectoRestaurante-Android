@@ -1,4 +1,4 @@
-package com.example.proyectorestaurante;
+package com.example.proyectorestaurante.utils;
 
 
 import android.content.Context;
@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.proyectorestaurante.recycler.Platos;
+import com.example.proyectorestaurante.models.Platos;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.itextpdf.io.font.PdfEncodings;

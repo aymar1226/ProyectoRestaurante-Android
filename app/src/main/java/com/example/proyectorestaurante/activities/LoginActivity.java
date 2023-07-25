@@ -1,21 +1,17 @@
-package com.example.proyectorestaurante.Activity;
+package com.example.proyectorestaurante.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.content.Context;
 import android.content.Intent;
-import android.icu.text.ConstrainedFieldPosition;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.proyectorestaurante.Clases.classlogin;
+import com.example.proyectorestaurante.auth.classlogin;
 import com.example.proyectorestaurante.R;
-import com.example.proyectorestaurante.SessionManager;
+import com.example.proyectorestaurante.utils.SessionManager;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 

@@ -1,4 +1,4 @@
-package com.example.proyectorestaurante.recycler;
+package com.example.proyectorestaurante.models;
 
 public class Platos {
 

@@ -1,4 +1,4 @@
-package com.example.proyectorestaurante.Activity;
+package com.example.proyectorestaurante.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.proyectorestaurante.ConexionDB;
+import com.example.proyectorestaurante.utils.ConexionDB;
 import com.example.proyectorestaurante.R;
 
 import java.sql.Connection;
@@ -21,9 +21,9 @@ import java.util.List;
 
 public class AgregarPersonal extends AppCompatActivity {
 
-    EditText nombre, apellido, cargo, direccion, telefono, dni;
-    Button btninsert;
-    Spinner spinner_personal;
+    private EditText nombre, apellido, cargo, direccion, telefono, dni;
+    private Button btninsert;
+    private Spinner spinner_personal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

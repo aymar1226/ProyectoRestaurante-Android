@@ -1,4 +1,4 @@
-package com.example.proyectorestaurante;
+package com.example.proyectorestaurante.utils;
 
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.kernel.events.Event;

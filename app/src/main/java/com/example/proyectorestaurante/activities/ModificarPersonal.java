@@ -1,4 +1,4 @@
-package com.example.proyectorestaurante.Activity;
+package com.example.proyectorestaurante.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.proyectorestaurante.ConexionDB;
+import com.example.proyectorestaurante.utils.ConexionDB;
 import com.example.proyectorestaurante.R;
 
 import java.sql.Connection;

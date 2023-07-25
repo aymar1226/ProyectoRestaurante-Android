@@ -1,4 +1,4 @@
-package com.example.proyectorestaurante;
+package com.example.proyectorestaurante.utils;
 
 import android.os.StrictMode;
 

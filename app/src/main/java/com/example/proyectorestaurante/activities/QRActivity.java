@@ -1,4 +1,4 @@
-package com.example.proyectorestaurante.Activity;
+package com.example.proyectorestaurante.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import com.example.proyectorestaurante.GeneradorPDF;
+import com.example.proyectorestaurante.utils.GeneradorPDF;
 import com.example.proyectorestaurante.R;
 
 public class QRActivity extends AppCompatActivity {

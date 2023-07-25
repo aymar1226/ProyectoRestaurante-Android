@@ -1,6 +1,5 @@
-package com.example.proyectorestaurante.Activity;
+package com.example.proyectorestaurante.activities;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,10 +13,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-import com.example.proyectorestaurante.ConexionDB;
+import com.example.proyectorestaurante.utils.ConexionDB;
 import com.example.proyectorestaurante.R;
-import com.example.proyectorestaurante.recycler.PersonalAdapter;
-import com.example.proyectorestaurante.recycler.Players;
+import com.example.proyectorestaurante.adapters.PersonalAdapter;
+import com.example.proyectorestaurante.models.Personal;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -33,7 +32,7 @@ public class Crud_Personal extends AppCompatActivity {
     Button crear_usuario;
 
     boolean buscarOn=false;
-    List<Players> userList = new ArrayList<>();
+    List<Personal> userList = new ArrayList<>();
     PersonalAdapter personalAdapter;
 
 
@@ -103,8 +102,8 @@ public class Crud_Personal extends AppCompatActivity {
                 String cargo = resultSet.getString("nombre_cargo");
                 String dni = resultSet.getString("dni");
 
-                Players player = new Players(idUsuario, nombreUsuario, apellidoUsuario, cargo,dni);
-                userList.add(player);
+                Personal personal = new Personal(idUsuario, nombreUsuario, apellidoUsuario, cargo,dni);
+                userList.add(personal);
 
 
             }

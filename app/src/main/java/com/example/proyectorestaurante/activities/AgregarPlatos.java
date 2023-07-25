@@ -1,10 +1,9 @@
-package com.example.proyectorestaurante.Activity;
+package com.example.proyectorestaurante.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -13,12 +12,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.proyectorestaurante.ConexionDB;
-import com.example.proyectorestaurante.ImageUploader;
+import com.example.proyectorestaurante.utils.ConexionDB;
+import com.example.proyectorestaurante.utils.ImageUploader;
 import com.example.proyectorestaurante.R;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -33,7 +31,6 @@ public class AgregarPlatos extends AppCompatActivity {
     Spinner spinnerPlato;
 
     private StorageReference storageReference;
-    Uri imageUri;
     ImageUploader imageUploader;
 
     @Override

@@ -1,4 +1,4 @@
-package com.example.proyectorestaurante.recycler;
+package com.example.proyectorestaurante.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,19 +14,18 @@ import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
-import com.example.proyectorestaurante.Activity.ModificarPersonal;
-import com.example.proyectorestaurante.ConexionDB;
-import com.example.proyectorestaurante.ImageUploader;
-import com.example.proyectorestaurante.Modificar_platos;
+import com.example.proyectorestaurante.utils.ConexionDB;
+import com.example.proyectorestaurante.utils.ImageUploader;
+import com.example.proyectorestaurante.activities.ModificarPlatos;
 import com.example.proyectorestaurante.R;
-import com.example.proyectorestaurante.SessionManager;
+import com.example.proyectorestaurante.utils.SessionManager;
+import com.example.proyectorestaurante.models.Platos;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -151,7 +150,7 @@ public class PlatosAdapter extends ArrayAdapter<Platos> {
                 } else {
                     finalView.setPressed(true);
                     if(rol.equals("Administrador")) {
-                        Intent intent = new Intent(mContext, Modificar_platos.class);
+                        Intent intent = new Intent(mContext, ModificarPlatos.class);
                         intent.putExtra("id_plato", clicPlato);
                         mContext.startActivity(intent);
                     }

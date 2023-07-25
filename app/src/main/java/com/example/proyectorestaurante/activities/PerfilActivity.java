@@ -1,4 +1,4 @@
-package com.example.proyectorestaurante.Activity;
+package com.example.proyectorestaurante.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.proyectorestaurante.Clases.Usuario;
+import com.example.proyectorestaurante.auth.Usuario;
 import com.example.proyectorestaurante.R;
 
 
