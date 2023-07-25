@@ -2,6 +2,7 @@ package com.example.proyectorestaurante.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -41,13 +42,14 @@ public class AgregarPersonal extends AppCompatActivity {
 
         Connection connection = ConexionDB.obtenerConexion();
 
-        //Obtener Cargos
+        //Cargar cargos en spinner
         List<String> cargo;
         cargo = obtenerCargos(connection);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, cargo);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_personal.setAdapter(adapter);
 
+        //Crear personal
         btninsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +62,7 @@ public class AgregarPersonal extends AppCompatActivity {
                 Connection connection = ConexionDB.obtenerConexion();
                 String imagen_name = "predet.jpg";
                 try {
-                    //Obtener el id de cargo
+                    //Obtener el cargo del sepinner
                     String cargoquery="SELECT id_cargo FROM cargo where nombre_cargo LIKE '%"+txt_cargo+"%'";
                     Statement st = connection.createStatement();
                     ResultSet resultSet = st.executeQuery(cargoquery);
@@ -68,13 +70,16 @@ public class AgregarPersonal extends AppCompatActivity {
                     if (resultSet.next()) {
                          idcargo = resultSet.getString("id_cargo");
                     }
-
+                    //Crear un nuevo personal
                     if (connection != null) {
-                        String sqlinsert = "INSERT INTO personal (nombre, apellido, id_cargo, direccion, telefono,dni)\n" +
+                        String sqlinsert = "INSERT INTO personal (nombre, apellido, id_cargo, direccion, telefono,dni)" +
                                 "VALUES ('" + txt_nombre + "', '" + txt_apellido + "','" + idcargo + "','" + txt_direccion + "','" + txt_telefono + "','" + txt_dni + "')";
                         int rowsAffected = st.executeUpdate(sqlinsert);
                         if (rowsAffected > 0) {
                             Toast.makeText(getApplicationContext(), "Personal agregado exitosamente", Toast.LENGTH_SHORT).show();
+                            //Redirige al crud
+                            Intent intent = new Intent(AgregarPersonal.this, Crud_Personal.class);
+                            startActivity(intent);
                         } else {
                             Toast.makeText(getApplicationContext(), "No se pudo agregar el personal", Toast.LENGTH_SHORT).show();
                         }
