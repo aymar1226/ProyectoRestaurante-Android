@@ -50,7 +50,7 @@
             app:layout_constraintEnd_toEndOf="@+id/image_menu"
             app:layout_constraintTop_toTopOf="@id/text_personal"
             app:tint="#000"
-            android:visibility="gone"></ImageView>
+            ></ImageView>
 
         <ImageView
             android:id="@+id/eliminar_usuario"

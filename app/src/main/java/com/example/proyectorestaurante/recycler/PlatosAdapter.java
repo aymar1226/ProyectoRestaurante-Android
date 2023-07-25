@@ -19,6 +19,7 @@ import com.example.proyectorestaurante.ConexionDB;
 import com.example.proyectorestaurante.ImageUploader;
 import com.example.proyectorestaurante.Modificar_platos;
 import com.example.proyectorestaurante.R;
+import com.example.proyectorestaurante.SessionManager;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -44,6 +45,8 @@ public class PlatosAdapter extends ArrayAdapter<Platos> {
     int itemselected;
     boolean isSelected;
     private ArrayList<Integer> selectedItemList = new ArrayList<>();
+    private SessionManager sessionManager;
+
 
 
     public PlatosAdapter(Context context, int resource, List<Platos> personList, ImageView agregar, ImageView eliminar, Activity activity) {
@@ -99,30 +102,38 @@ public class PlatosAdapter extends ArrayAdapter<Platos> {
             notifyDataSetChanged();
         }
 
-        // Clic largo
-        view.setOnLongClickListener(new View.OnLongClickListener() {
-            boolean isSelected = selectedItemList.contains(position);
+        //Crear instancia de session
+        sessionManager = new SessionManager(getContext());
+        String rol = sessionManager.obtenerRol();
 
-            @Override
-            public boolean onLongClick(View v) {
-                itemselected = plato.getId();
+        if(rol.equals("Administrador")) {
+            // Clic largo
+            view.setOnLongClickListener(new View.OnLongClickListener() {
+                boolean isSelected = selectedItemList.contains(position);
 
-                // Verificar si el ítem ya está seleccionado
-                if (isSelected) {
-                    // Deseleccionar el ítem y restaurar el color de fondo original
-                    selectedItemList.remove(Integer.valueOf(position));
-                    agregarImage.setVisibility(View.VISIBLE);
-                    eliminarImage.setVisibility(View.GONE);
-                } else {
-                    // Seleccionar el ítem y cambiar el color de fondo
-                    selectedItemList.add(position);
-                    agregarImage.setVisibility(View.GONE);
-                    eliminarImage.setVisibility(View.VISIBLE);
+                @Override
+                public boolean onLongClick(View v) {
+                    itemselected = plato.getId();
+
+                    // Verificar si el ítem ya está seleccionado
+                    if (isSelected) {
+                        // Deseleccionar el ítem y restaurar el color de fondo original
+                        selectedItemList.remove(Integer.valueOf(position));
+                        agregarImage.setVisibility(View.VISIBLE);
+                        eliminarImage.setVisibility(View.GONE);
+                    } else {
+                        // Seleccionar el ítem y cambiar el color de fondo
+                        selectedItemList.add(position);
+                        agregarImage.setVisibility(View.GONE);
+                        eliminarImage.setVisibility(View.VISIBLE);
+                    }
+                    notifyDataSetChanged();
+                    return false;
                 }
-                notifyDataSetChanged();
-                return false;
-            }
-        });
+            });
+        }else {
+            agregarImage.setVisibility(View.GONE);
+        }
 
         //Clic corto
         View finalView = view;
@@ -139,9 +150,11 @@ public class PlatosAdapter extends ArrayAdapter<Platos> {
                     notifyDataSetChanged();
                 } else {
                     finalView.setPressed(true);
-                    Intent intent = new Intent(mContext, Modificar_platos.class);
-                    intent.putExtra("id_plato", clicPlato);
-                    mContext.startActivity(intent);
+                    if(rol.equals("Administrador")) {
+                        Intent intent = new Intent(mContext, Modificar_platos.class);
+                        intent.putExtra("id_plato", clicPlato);
+                        mContext.startActivity(intent);
+                    }
                 }
 
                 //Toast.makeText(mContext, "Clic en: " + itemselected, Toast.LENGTH_SHORT).show();
@@ -149,19 +162,21 @@ public class PlatosAdapter extends ArrayAdapter<Platos> {
             }
         });
 
-        //Eliminar personal
-        eliminarImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        if(rol.equals("Administrador")) {
+            //Eliminar personal
+            eliminarImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-                mPlatoList.remove(position);
-                notifyDataSetChanged();
-                eliminarPlatoDB(itemselected);
-                agregarImage.setVisibility(View.VISIBLE);
-                eliminarImage.setVisibility(View.GONE);
+                    mPlatoList.remove(position);
+                    notifyDataSetChanged();
+                    eliminarPlatoDB(itemselected);
+                    agregarImage.setVisibility(View.VISIBLE);
+                    eliminarImage.setVisibility(View.GONE);
 
-            }
-        });
+                }
+            });
+        }
 
         return view;
     }

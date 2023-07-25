@@ -18,6 +18,7 @@ import com.example.proyectorestaurante.Activity.ModificarPersonal;
 import com.example.proyectorestaurante.Clases.classlogin;
 import com.example.proyectorestaurante.ConexionDB;
 import com.example.proyectorestaurante.R;
+import com.example.proyectorestaurante.SessionManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,11 +33,9 @@ public class PersonalAdapter extends ArrayAdapter<Players> {
     boolean isSelected;
     int itemselected;
     private ArrayList<Integer> selectedItemList = new ArrayList<>();
-    private LinearLayout linearLayout;
     private ImageView eliminarImage, agregarImage;
 
-    private classlogin classlogin;
-
+    private SessionManager sessionManager;
 
     public PersonalAdapter(Context context, int resource, List<Players> personList, ImageView agregar, ImageView eliminar) {
         super(context, resource, personList);
@@ -64,6 +63,8 @@ public class PersonalAdapter extends ArrayAdapter<Players> {
 
 
 
+
+
         isSelected = selectedItemList.contains(position);
         // Establecer el color de fondo original del ítem
         if(isSelected){
@@ -76,9 +77,12 @@ public class PersonalAdapter extends ArrayAdapter<Players> {
         }
 
 
+        //Crear instancia de session
+        sessionManager = new SessionManager(getContext());
+        String rol = sessionManager.obtenerRol();
+
         // Clic largo
-        if(classlogin.getRol()=="Administrador") {
-            agregarImage.setVisibility(View.VISIBLE);
+        if(rol.equals("Administrador")) {
             view.setOnLongClickListener(new View.OnLongClickListener() {
                 boolean isSelected = selectedItemList.contains(position);
 
@@ -102,6 +106,8 @@ public class PersonalAdapter extends ArrayAdapter<Players> {
                     return false;
                 }
             });
+        }else {
+            agregarImage.setVisibility(View.GONE);
         }
 
         //Clic corto
@@ -120,7 +126,7 @@ public class PersonalAdapter extends ArrayAdapter<Players> {
                 }else {
                     finalView.setPressed(true);
 
-                    if(classlogin.getRol()=="Administrador") {
+                    if(rol.equals("Administrador")) {
                         Intent intent = new Intent(mContext, ModificarPersonal.class);
                         intent.putExtra("id_personal", clicPersonal);
                         mContext.startActivity(intent);
@@ -132,7 +138,7 @@ public class PersonalAdapter extends ArrayAdapter<Players> {
         });
 
         //Eliminar personal
-        if(classlogin.getRol()=="Administrador") {
+        if(rol.equals("Administrador")) {
             eliminarImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
