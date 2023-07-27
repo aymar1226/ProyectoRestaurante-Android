@@ -49,6 +49,8 @@ public class SessionManager {
 
     public void cerrarSesion() {
         editor.remove(KEY_ROL);
+        editor.remove(KEY_ID);
+        editor.remove(KEY_LOGIN);
         editor.apply();
     }
 }

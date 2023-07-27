@@ -20,7 +20,8 @@
         <com.mikhaellopez.circularimageview.CircularImageView
             android:layout_width="110dp"
             android:layout_height="110dp"
-            android:src="@drawable/fotovacio"/>
+            android:src="@drawable/fotovacio"
+            tools:ignore="MissingClass"/>
 
         <TextView
             android:layout_width="wrap_content"
