@@ -18,31 +18,25 @@
         android:theme="@style/Theme.ProyectoRestaurante"
         tools:targetApi="31">
         <activity
-            android:name=".Modificar_platos"
+            android:name=".activities.ModificarPlatos"
             android:exported="false" />
         <activity
-            android:name=".Personal_recycler"
+            android:name=".activities.QRActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.QRActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activity.ModificarPersonal"
-            android:exported="false" />
-        <activity
-            android:name=".Activity.Cartilla_DigitalActivity"
+            android:name=".activities.ModificarPersonal"
             android:exported="false" />
         <activity
             android:name=".ejemplo"
             android:exported="false" />
         <activity
-            android:name=".Activity.Crud_Personal"
+            android:name=".activities.Crud_Personal"
             android:exported="false" />
         <activity
-            android:name=".Activity.Crud_Platos"
+            android:name=".activities.Crud_Platos"
             android:exported="false" />
         <activity
-            android:name=".Activity.LogoActivity"
+            android:name=".activities.LogoActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,22 +45,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity.PerfilActivity"
+            android:name=".activities.PerfilActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.PrincipalActivity"
+            android:name=".activities.PrincipalActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.AgregarPersonal"
+            android:name=".activities.AgregarPersonal"
             android:exported="false" />
         <activity
-            android:name=".Activity.AgregarPlatos"
+            android:name=".activities.AgregarPlatos"
             android:exported="false" />
         <activity
-            android:name=".Activity.AgregarUsuario"
+            android:name=".activities.AgregarUsuario"
             android:exported="false" />
     </application>
 

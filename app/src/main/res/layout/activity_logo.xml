@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FCC8D1"
-    tools:context=".Activity.LogoActivity">
+    tools:context=".activities.LogoActivity">
 
     <ImageView
         android:id="@+id/logoani"
