@@ -23,10 +23,7 @@ public class PerfilActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
 
-        nombre = findViewById(R.id.nombrepe);
-        apellido = findViewById(R.id.apellidope);
-        correo = findViewById(R.id.correope);
-        dni = findViewById(R.id.dni);
+
 
         idUsuario =1;
 

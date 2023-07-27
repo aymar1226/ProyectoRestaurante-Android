@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -175,21 +174,7 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="180dp"
-            android:layout_height="50dp"
-            android:background="@drawable/bg_btn"
-            android:text="Editar Perfil"
-            android:gravity="center"
-            android:textColor="@color/btnVi"
-            android:textStyle="bold"
-            android:textSize="18dp"
-            android:drawableLeft="@drawable/baseline_edit_24"
-            android:paddingLeft="10dp"
-            android:layout_marginLeft="-10dp"/>
-
     </LinearLayout>
-
 
 
 
