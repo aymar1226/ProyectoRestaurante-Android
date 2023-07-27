@@ -38,16 +38,17 @@ public class classlogin {
     public boolean validarCredenciales(String usuario, String password){
         sessionManager = new SessionManager(mContext);
         try(Connection connection = ConexionDB.obtenerConexion()){
-            String query = "SELECT COUNT(*), r.nombre_rol FROM usuario u JOIN rol r ON u.id_rol = r.id_rol WHERE u.correo = ? AND CAST(DECRYPTBYPASSPHRASE('L4f4ry3t3nCrypt4d0', u.contraseña) as VARCHAR(MAX)) = ? GROUP BY r.nombre_rol";
+            String query = "SELECT COUNT(*), r.nombre_rol, u.id_usuario FROM usuario u JOIN rol r ON u.id_rol = r.id_rol WHERE u.correo = ? AND CAST(DECRYPTBYPASSPHRASE('L4f4ry3t3nCrypt4d0', u.contraseña) as VARCHAR(MAX)) = ? GROUP BY r.nombre_rol, u.id_usuario";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, usuario);
             statement.setString(2, password);
             ResultSet resultSet = statement.executeQuery();
-
             if (resultSet.next()) {
                 int count = resultSet.getInt(1);
                 String rol = resultSet.getString("nombre_rol");
+                String idUsuario = resultSet.getString("id_usuario");
                 sessionManager.guardarRol(rol);
+                sessionManager.guardarId(idUsuario);
                 return count > 0;
             }
         } catch (SQLException e) {
