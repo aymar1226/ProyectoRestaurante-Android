@@ -86,10 +86,10 @@ public class Crud_Platos extends AppCompatActivity {
         String query;
         // Consulta SQL para seleccionar todos los registros de la tabla de usuarios
         if(buscarOn){
-            query = "SELECT id_plato, plato.nombre, precio, categoria.nombre AS nombre_categoria,imagen  FROM plato INNER JOIN categoria on plato.id_categoria = categoria.id_categoria WHERE plato.nombre LIKE '%" + texto + "%'";
+            query = "SELECT id_plato, plato.nombre, precio, descripcion, categoria.nombre AS nombre_categoria,imagen  FROM plato INNER JOIN categoria on plato.id_categoria = categoria.id_categoria WHERE plato.nombre LIKE '%" + texto + "%'";
         }
         else {
-            query = "SELECT id_plato, plato.nombre, precio, categoria.nombre AS nombre_categoria,imagen  FROM plato INNER JOIN categoria on plato.id_categoria = categoria.id_categoria";
+            query = "SELECT id_plato, plato.nombre, precio, descripcion, categoria.nombre AS nombre_categoria,imagen  FROM plato INNER JOIN categoria on plato.id_categoria = categoria.id_categoria";
         }
         try {
             Statement statement = connection.createStatement();
@@ -100,9 +100,10 @@ public class Crud_Platos extends AppCompatActivity {
                 String nombrePlato = resultSet.getString("nombre");
                 double precio = resultSet.getDouble("precio");
                 String categoria = resultSet.getString("nombre_categoria");
+                String descripcion = resultSet.getString("descripcion");
                 String imagen = resultSet.getString("imagen");
 
-                Platos platos = new Platos(idPlato, nombrePlato, precio, imagen, categoria);
+                Platos platos = new Platos(idPlato, nombrePlato, precio, imagen, categoria, descripcion);
                 platosList.add(platos);
 
 

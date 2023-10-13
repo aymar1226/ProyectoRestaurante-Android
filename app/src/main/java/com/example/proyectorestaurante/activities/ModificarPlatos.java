@@ -50,6 +50,7 @@ public class ModificarPlatos extends AppCompatActivity {
         txtdescripcion = findViewById(R.id.editTextDescripcion);
         txtprecio = findViewById(R.id.editTextPrecio);
 
+
         spinnerCategoria = findViewById(R.id.spinnerCategoria);
         spinnerCategoria.setEnabled(false);
 

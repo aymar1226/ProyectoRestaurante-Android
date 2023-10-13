@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E8CAA6"
+    android:background="@drawable/fondo"
     tools:context=".activities.Crud_Personal"
     >
 
@@ -14,7 +14,7 @@
         android:padding="15dp"
         android:elevation="10dp"
         tools:ignore="MissingConstraints"
-        android:background="@drawable/list_item_selector"
+        android:background="#967E76"
         >
         <ImageView
             android:id="@+id/imagen_personal"
@@ -35,12 +35,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nombre"
+                android:textColor="#ffff"
                 android:textSize="16sp"/>
             <TextView
                 android:id="@+id/cargo_personal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Rol"
+                android:textColor="#EBED82"
                 android:textSize="16sp"/>
         </LinearLayout>
 

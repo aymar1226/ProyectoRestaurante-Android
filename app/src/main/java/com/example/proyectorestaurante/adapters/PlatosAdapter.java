@@ -71,6 +71,7 @@ public class PlatosAdapter extends ArrayAdapter<Platos> {
         TextView nameTextView = view.findViewById(R.id.nombre_plato);
         TextView precioTextView = view.findViewById(R.id.cargo_plato);
         TextView categoriaTextView = view.findViewById(R.id.categoria_plato);
+        TextView descripcionTextView = view.findViewById(R.id.descripcion_plato);
         ImageView platoImage = view.findViewById(R.id.imagen_plato);
 
         Platos plato = mPlatoList.get(position);
@@ -89,6 +90,7 @@ public class PlatosAdapter extends ArrayAdapter<Platos> {
         nameTextView.setText(plato.getNombre());
         precioTextView.setText("S/"+ String.valueOf(plato.getPrecio()));
         categoriaTextView.setText(plato.getCategoria());
+        descripcionTextView.setText(plato.getDescripcion());
 
         isSelected = selectedItemList.contains(position);
         // Establecer el color de fondo original del ítem

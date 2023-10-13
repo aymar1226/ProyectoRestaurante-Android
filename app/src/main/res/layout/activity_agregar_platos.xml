@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E8CAA6">
+    android:background="@drawable/fondo">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_header"
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
             android:text="Agregar Productos"
-            android:textColor="#000"
+            android:textColor="#F1CD93"
             android:textSize="25sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -30,7 +30,7 @@
             android:layout_height="30dp"
             android:layout_marginEnd="15dp"
             android:src="@drawable/menu"
-            app:tint="#000"
+            app:tint="#F1CD93"
             app:layout_constraintBottom_toBottomOf="@id/text_platos"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/text_platos">

@@ -14,33 +14,75 @@
         android:padding="15dp"
         android:elevation="10dp"
         tools:ignore="MissingConstraints"
-        android:background="@drawable/list_item_selector"
+        android:background="#967E76"
         >
+
         <ImageView
             android:id="@+id/imagen_plato"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="91dp"
+            android:layout_height="111dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="107dp"
+            android:layout_marginStart="20dp"
             android:orientation="vertical"
             app:layout_constraintStart_toEndOf="@id/imagen_plato"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="20dp">
-            <TextView
-                android:id="@+id/nombre_plato"
-                android:layout_width="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nombre"
-                android:textSize="16sp"/>
-            <TextView
-                android:id="@+id/categoria_plato"
-                android:layout_width="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre: "
+                    android:textColor="#EBED82"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/nombre_plato"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre"
+                    android:textColor="#ffff"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Categoria"
-                android:textSize="16sp"/>
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Categoria: "
+                    android:textColor="#EBED82"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/categoria_plato"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Categoria"
+                    android:textColor="#ffff"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/descripcion_plato"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Descripción"
+                android:textColor="#ffff"
+                android:textSize="16sp" />
+
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -50,10 +92,10 @@
                     android:id="@+id/cargo_plato"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Precio"
-                    android:textSize="16sp"
                     android:layout_gravity="bottom"
-               />
+                    android:text="Precio"
+                    android:textColor="#EBED82"
+                    android:textSize="16sp" />
 
             </LinearLayout>
         </LinearLayout>

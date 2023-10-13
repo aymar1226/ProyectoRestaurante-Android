@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E8CAA6"
+    android:background="@drawable/fondo"
     tools:context=".activities.PrincipalActivity">
 
     <ScrollView
@@ -35,7 +35,7 @@
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="32dp"
                     android:text="Bienvenido Jorge"
-                    android:textColor="#FFFFFF"
+                    android:textColor="#F1CD93"
                     android:textColorHighlight="#4C4343"
                     android:textSize="20sp"
                     android:textStyle="bold"

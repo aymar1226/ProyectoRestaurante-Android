@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E8CAA6"
+    android:background="@drawable/fondo"
     tools:context=".ejemplo"
     android:fitsSystemWindows="true">
 
@@ -23,7 +23,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="20dp"
             android:text="Gestion de Productos"
-            android:textColor="#000"
+            android:textColor="#F1CD93"
             android:textSize="25sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"></TextView>
@@ -33,7 +33,7 @@
             android:layout_height="30dp"
             android:layout_marginEnd="15dp"
             android:src="@drawable/menu"
-            app:tint="#000"
+            app:tint="#F1CD93"
             app:layout_constraintBottom_toBottomOf="@id/text_platos"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/text_platos">
@@ -44,7 +44,7 @@
             android:layout_height="30dp"
             android:layout_marginEnd="40dp"
             android:src="@drawable/agregar_plato"
-            app:tint="#000"
+            app:tint="#F1CD93"
             app:layout_constraintBottom_toBottomOf="@id/text_platos"
             app:layout_constraintEnd_toEndOf="@+id/image_menu"
             app:layout_constraintTop_toTopOf="@id/text_platos"
@@ -56,7 +56,7 @@
             android:layout_height="30dp"
             android:layout_marginEnd="40dp"
             android:src="@drawable/eliminar"
-            app:tint="#000"
+            app:tint="#F1CD93"
             app:layout_constraintBottom_toBottomOf="@id/text_platos"
             app:layout_constraintEnd_toEndOf="@+id/image_menu"
             app:layout_constraintTop_toTopOf="@id/text_platos"
@@ -98,7 +98,7 @@
                 android:background="@drawable/search_icon_background"
                 android:padding="6dp"
                 android:src="@drawable/ic_search"
-                app:tint="#f21036">
+                app:tint="#890F0D">
             </ImageView>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

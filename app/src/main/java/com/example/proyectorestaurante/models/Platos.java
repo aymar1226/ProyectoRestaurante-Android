@@ -7,14 +7,16 @@ public class Platos {
     private double precio;
     private String imagen_ruta;
     private String categoria;
+    private String descripcion;
     private String imagePath;
 
-    public Platos(int id, String nombre, double precio, String imagen_ruta, String categoria) {
+    public Platos(int id, String nombre, double precio, String imagen_ruta, String categoria, String descripcion) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
         this.imagen_ruta = imagen_ruta;
         this.categoria = categoria;
+        this.descripcion = descripcion;
     }
 
     public int getId() {
@@ -35,5 +37,9 @@ public class Platos {
 
     public String getCategoria() {
         return categoria;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
     }
 }
