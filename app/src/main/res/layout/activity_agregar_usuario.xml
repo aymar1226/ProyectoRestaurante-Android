@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.AgregarUsuario"
-    android:background="#FBE9D6">
+    android:background="#E8CAA6">
 
   <androidx.constraintlayout.widget.ConstraintLayout
       android:id="@+id/layout_header"

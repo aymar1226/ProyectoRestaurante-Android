@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FBE9D6"
+    android:background="#E8CAA6"
     tools:context=".activities.PrincipalActivity">
 
     <ScrollView
@@ -26,7 +26,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#f21036">
+                android:background="#890F0D">
 
                 <TextView
                     android:id="@+id/nombreP"
@@ -82,23 +82,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:backgroundTint="#f21036"
+            android:backgroundTint="#890F0D"
             app:fabCradleMargin="8dp"
             app:fabCradleRoundedCornerRadius="50dp"
             app:fabCradleVerticalOffset="6dp">
 
             <LinearLayout
                 android:layout_width="360dp"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal">
 
                 <LinearLayout
                     android:id="@+id/inicio_btn"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.2"
+                    android:layout_weight="1"
                     android:orientation="vertical"
-                    android:onClick="irAInicio"
-                    >
+                    android:onClick="irAInicio">
 
                     <ImageView
                         android:id="@+id/imageView5"
@@ -124,7 +124,7 @@
                     android:id="@+id/perfil_btn"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.2"
+                    android:layout_weight="1"
                     android:orientation="vertical"
                     android:onClick="irOtroActivity">
 
@@ -148,35 +148,12 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/home_btn"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.2"
-                    android:orientation="vertical"
-                    tools:visibility="invisible">
-
-                    <ImageView
-                        android:id="@+id/imageView7"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:id="@+id/textView7"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:textColor="#676767"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/platos_btn"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.2"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <ImageView
@@ -192,7 +169,7 @@
                         android:id="@+id/textView8"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Platos"
+                        android:text="Productos"
                         android:textAlignment="center"
                         android:textColor="#ffffff"
                         android:textStyle="bold"
@@ -204,7 +181,7 @@
                     android:id="@+id/personal_btn"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.2"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <ImageView
@@ -230,17 +207,8 @@
             </LinearLayout>
         </com.google.android.material.bottomappbar.BottomAppBar>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#ffffff"
-            android:elevation="3dp"
-            android:src="@drawable/qr"
-            app:layout_anchor="@+id/app_bar"
-            app:layout_anchorGravity="top|center"
-            app:maxImageSize="38dp"
-            android:onClick="irAQR_principal"
-            ></com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <ImageView
@@ -252,7 +220,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollview"
-        app:srcCompat="@drawable/icon" />
+        app:srcCompat="@drawable/bizcocho" />
 
     <ViewFlipper
         android:id="@+id/carrusel"

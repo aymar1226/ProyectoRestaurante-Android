@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FCC8D1"
+    android:background="#E8CAA6"
     tools:context=".activities.LogoActivity">
 
     <ImageView
@@ -19,7 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon" />
+        app:srcCompat="@drawable/bizcocho" />
 
     <TextView
         android:id="@+id/by"
@@ -29,7 +29,7 @@
         android:hint="@string/grrupo"
         android:textAlignment="center"
         android:textSize="35dp"
-        android:textColorHint="#D14D72"
+        android:textColorHint="#890F0D"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

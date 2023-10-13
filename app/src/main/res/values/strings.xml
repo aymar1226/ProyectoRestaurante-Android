@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">ProyectoRestaurante</string>
-    <string name="title">Restaurante Hinojo Oriental</string>
+    <string name="title">Pasteleria y Dulceria Velazco</string>
     <string name="user">Usuario</string>
     <string name="contraseña">Contraseña</string>
     <string name="ingresar">Ingresar</string>
@@ -16,7 +16,7 @@
     <string name="btn">Ver</string>
     <string name="lblInicioPersonal">Inicio Personal</string>
     <string name="tituloperfil">Perfil del Administrador</string>
-    <string name="nombre">Nombres: Jorge Armando</string>
+    <string name="nombre">Nombres: Jorge Luis</string>
     <string name="apellidos">Apellidos: Bonifaz Campos</string>
     <string name="puesto">Puesto: Administrador</string>
     <string name="dni">DNI: 72466894</string>
