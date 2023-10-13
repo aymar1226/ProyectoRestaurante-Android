@@ -30,8 +30,7 @@
             android:layout_height="30dp"
             android:layout_marginEnd="15dp"
             android:src="@drawable/menu"
-            android:background="#F1CD93"
-            app:tint="#000"
+            app:tint="#F1CD93"
             app:layout_constraintBottom_toBottomOf="@id/text_personal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/text_personal">
@@ -42,7 +41,7 @@
             android:layout_height="30dp"
             android:layout_marginEnd="40dp"
             android:src="@drawable/eliminar"
-            app:tint="#000"
+            app:tint="#F1CD93"
             app:layout_constraintBottom_toBottomOf="@id/text_personal"
             app:layout_constraintEnd_toEndOf="@+id/image_menu"
             app:layout_constraintTop_toTopOf="@id/text_personal"
