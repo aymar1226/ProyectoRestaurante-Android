@@ -113,6 +113,7 @@
         app:layout_constraintVertical_bias="0.0"
         android:divider="#00000000"
         android:dividerHeight="8dp"
+        android:layout_marginBottom="140px"
         />
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
