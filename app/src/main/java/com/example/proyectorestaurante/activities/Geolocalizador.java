@@ -66,7 +66,8 @@ public class Geolocalizador extends AppCompatActivity implements SensorEventList
             e.printStackTrace();
         }
     }
-    int a=0;
+    private boolean messageSent = false; // Variable de control para enviar el mensaje solo una vez
+
 
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -80,12 +81,10 @@ public class Geolocalizador extends AppCompatActivity implements SensorEventList
         float delta = acelVal - acelLast;
         shake = shake * 0.9f + delta; // cálculo de movimiento brusco
 
-        // Si la diferencia de movimiento es mayor al umbral (por ejemplo, 12), enviar SMS
-        if(a==0){
-            a++;
-            if (shake > 12) {
-                sendSMS();  // Aquí se llama a sendSMS cuando shake supera el umbral
-            }
+        // Si la diferencia de movimiento es mayor al umbral (por ejemplo, 12) y no se ha enviado el mensaje, enviarlo
+        if (shake > 12 && !messageSent) {
+            sendSMS();
+            messageSent = true; // Marcar que el mensaje ya fue enviado
         }
     }
 
