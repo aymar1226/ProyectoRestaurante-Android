@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    tools:context=".activities.ForoActivity">
+    <!-- Encabezado -->
+    <TextView
+        android:id="@+id/tvTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:text="Crear Nuevo Foro"
+        android:textSize="24sp"
+        android:textColor="#333"
+        android:fontFamily="sans-serif-medium" />
+
+    <!-- Card para Formulario -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTitulo"
+        android:layout_margin="16dp"
+        android:padding="16dp"
+        android:elevation="8dp"
+        app:cardCornerRadius="12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Campo Nombre del Foro -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre del Foro"
+                android:textColor="#333"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif" />
+
+            <EditText
+                android:id="@+id/NombreForo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#6200EE"
+                android:hint="Introduce el nombre"
+                android:padding="12dp"
+                android:textColor="#000"
+                android:textColorHint="#888"
+                android:fontFamily="sans-serif" />
+
+            <!-- Campo Descripción -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Descripción"
+                android:textColor="#333"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif" />
+
+            <EditText
+                android:id="@+id/Descripcion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#6200EE"
+                android:hint="Introduce una descripción"
+                android:padding="12dp"
+                android:textColor="#000"
+                android:textColorHint="#888"
+                android:fontFamily="sans-serif"
+                android:inputType="textMultiLine"
+                android:minLines="3" />
+
+            <!-- Botón Crear Foro -->
+            <Button
+                android:id="@+id/btnCrearForo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#6200EE"
+                android:text="Crear Foro"
+                android:textAllCaps="false"
+                android:textColor="#FFF"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="16sp"
+                android:padding="12dp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

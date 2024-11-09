@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                 String usuario = (txusuario.getText().toString()).trim();
                 String password = (txpassword.getText().toString()).trim();
                 new Validarusuario().execute(usuario, password);*/
-                Intent intent = new Intent(LoginActivity.this, Geolocalizador.class);
+                Intent intent = new Intent(LoginActivity.this, Visualizar_foros.class);
                 startActivity(intent);
             }
         });
@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
                 // Realizar la acción correspondiente al inicio de sesión exitoso
             } else {
-                Intent intent = new Intent(LoginActivity.this, Geolocalizador.class);
+                Intent intent = new Intent(LoginActivity.this, ForoActivity.class);
                 startActivity(intent);
                 Toast.makeText(LoginActivity.this, "Usuario o contraseña inválidos", Toast.LENGTH_LONG).show();
             }

@@ -31,7 +31,6 @@ public class SessionManager {
     public void guardarId(String id) {
         editor.putString(KEY_ID, id);
         editor.apply();
-|
     }
 
     public String obtenerId() {
