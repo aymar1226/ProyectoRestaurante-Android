@@ -4,7 +4,6 @@
     <string name="user">Usuario</string>
     <string name="contraseña">Contraseña</string>
     <string name="ingresar">Ingresar</string>
-
     <string name="agregar">Agregar</string>
     <string name="txtkung">Pollo Kung Pao</string>
     <string name="txtalemendaras">Pollo con Almendras</string>
@@ -42,8 +41,17 @@
     <string name="precio_platos">Precio:</string>
     <string name="boton_agregar_platos">Agregar Platos</string>
 
-
     <string name="Cargo">cargo_personal</string>
     <string name="agregar_usuario">Agregar Usuario</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!-- Opciones para el Spinner de relación -->
+    <string-array name="relationship_options">
+        <item>Seleccionar relación</item>
+        <item>Family</item>
+        <item>Friend</item>
+        <item>Neighbor</item>
+        <item>Colleague</item>
+        <item>Other</item>
+    </string-array>
 </resources>
