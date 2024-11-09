@@ -43,6 +43,7 @@ public class classlogin {
             statement.setString(1, usuario);
             statement.setString(2, password);
             ResultSet resultSet = statement.executeQuery();
+            System.out.println(resultSet);
             if (resultSet.next()) {
                 int count = resultSet.getInt(1);
                 String rol = resultSet.getString("nombre_rol");

@@ -68,7 +68,7 @@ public class PrincipalActivity extends AppCompatActivity {
     }
 
     public void irAInicio(View view) {
-        Intent intent = new Intent(PrincipalActivity.this, PrincipalActivity.class);
+        Intent intent = new Intent(PrincipalActivity.this, Geolocalizador.class);
         startActivity(intent);
     }
     public void irOtroActivity(View view) {

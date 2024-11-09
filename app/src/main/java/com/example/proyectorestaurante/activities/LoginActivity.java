@@ -53,9 +53,12 @@ public class LoginActivity extends AppCompatActivity {
         gobtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /*
                 String usuario = (txusuario.getText().toString()).trim();
                 String password = (txpassword.getText().toString()).trim();
-                new Validarusuario().execute(usuario, password);
+                new Validarusuario().execute(usuario, password);*/
+                Intent intent = new Intent(LoginActivity.this, Geolocalizador.class);
+                startActivity(intent);
             }
         });
 
@@ -79,6 +82,8 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
                 // Realizar la acción correspondiente al inicio de sesión exitoso
             } else {
+                Intent intent = new Intent(LoginActivity.this, Geolocalizador.class);
+                startActivity(intent);
                 Toast.makeText(LoginActivity.this, "Usuario o contraseña inválidos", Toast.LENGTH_LONG).show();
             }
         }
