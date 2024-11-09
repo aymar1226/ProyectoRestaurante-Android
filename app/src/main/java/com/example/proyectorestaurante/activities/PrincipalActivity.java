@@ -75,16 +75,5 @@ public class PrincipalActivity extends AppCompatActivity {
         Intent intent = new Intent(PrincipalActivity.this, PerfilActivity.class);
         startActivity(intent);
     }
-    public void irAPlatos(View view) {
-        Intent intent = new Intent(PrincipalActivity.this, Crud_Platos.class);
-        startActivity(intent);
-    }
-    public void irAPersonal(View view) {
-        Intent intent = new Intent(PrincipalActivity.this, Crud_Personal.class);
-        startActivity(intent);
-    }
-    public void irAQR_principal(View view) {
-        Intent intent = new Intent(PrincipalActivity.this, QRActivity.class);
-        startActivity(intent);
-    }
+
 }

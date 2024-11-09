@@ -53,18 +53,7 @@ public class PerfilActivity extends AppCompatActivity {
         Intent intent = new Intent(PerfilActivity.this, PerfilActivity.class);
         startActivity(intent);
     }
-    public void irAPlatos(View view) {
-        Intent intent = new Intent(PerfilActivity.this, Crud_Platos.class);
-        startActivity(intent);
-    }
-    public void irAPersonal(View view) {
-        Intent intent = new Intent(PerfilActivity.this, Crud_Personal.class);
-        startActivity(intent);
-    }
-    public void irAQR(View view) {
-        Intent intent = new Intent(PerfilActivity.this, QRActivity.class);
-        startActivity(intent);
-    }
+
 
     public void obtenerNombreUsuario() {
         sessionManager = new SessionManager(getApplicationContext());

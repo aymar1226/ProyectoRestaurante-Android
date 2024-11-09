@@ -26,24 +26,6 @@
             android:name=".activities.Geolocalizador"
             android:exported="false" />
         <activity
-            android:name=".activities.ModificarPlatos"
-            android:exported="false" />
-        <activity
-            android:name=".activities.QRActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.ModificarPersonal"
-            android:exported="false" />
-        <activity
-            android:name=".ejemplo"
-            android:exported="false" />
-        <activity
-            android:name=".activities.Crud_Personal"
-            android:exported="false" />
-        <activity
-            android:name=".activities.Crud_Platos"
-            android:exported="false" />
-        <activity
             android:name=".activities.LogoActivity"
             android:exported="true">
             <intent-filter>
@@ -60,15 +42,6 @@
             android:exported="false" />
         <activity
             android:name=".activities.LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.AgregarPersonal"
-            android:exported="false" />
-        <activity
-            android:name=".activities.AgregarPlatos"
-            android:exported="false" />
-        <activity
-            android:name=".activities.AgregarUsuario"
             android:exported="false" />
     </application>
 
